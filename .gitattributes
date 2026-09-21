@@ -1,12 +1,10 @@
 ## ---------------------------------------------------------------------
 ## Unity
 ## ---------------------------------------------------------------------
-
 # C# and shader source (text diff/merge)
 *.cs                diff=csharp text
 *.cginc             text
 *.shader            text
-
 # ---------- YAML‑mergeable Unity assets ----------
 *.mat                merge=unityyamlmerge eol=lf
 *.anim               merge=unityyamlmerge eol=lf
@@ -15,19 +13,16 @@
 *.physicsMaterial2D  merge=unityyamlmerge eol=lf
 *.physicMaterial     merge=unityyamlmerge eol=lf
 *.controller         merge=unityyamlmerge eol=lf
-*.asset              merge=unityyamlmerge eol=lf
+*.asset filter=lfs diff=lfs merge=lfs -text
 *.meta               merge=unityyamlmerge eol=lf
-
 # ---------- Unity assets that MUST stay binary ----------
 # These lines come **after** the generic rule so they override it.
 [Tt]errain*.asset        filter=lfs diff=lfs merge=lfs -text -eol
 [Ll]ighting[Dd]ata*.asset filter=lfs diff=lfs merge=lfs -text -eol
 [Nn]av[Mm]esh*.asset     filter=lfs diff=lfs merge=lfs -text -eol
-
 ## ---------------------------------------------------------------------
 ## Git LFS – large/binary files
 ## ---------------------------------------------------------------------
-
 # Images
 *.jpg  filter=lfs diff=lfs merge=lfs -text
 *.jpeg filter=lfs diff=lfs merge=lfs -text
@@ -36,22 +31,18 @@
 *.psd  filter=lfs diff=lfs merge=lfs -text
 *.ai   filter=lfs diff=lfs merge=lfs -text
 *.tif  filter=lfs diff=lfs merge=lfs -text
-
 # Audio
 *.mp3 filter=lfs diff=lfs merge=lfs -text
 *.wav filter=lfs diff=lfs merge=lfs -text
 *.ogg filter=lfs diff=lfs merge=lfs -text
-
 # Video
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 *.mov filter=lfs diff=lfs merge=lfs -text
-
 # 3‑D objects
 *.FBX  filter=lfs diff=lfs merge=lfs -text
 *.fbx  filter=lfs diff=lfs merge=lfs -text
 *.blend filter=lfs diff=lfs merge=lfs -text
 *.obj  filter=lfs diff=lfs merge=lfs -text
-
 # Other binaries & archives
 *.a            filter=lfs diff=lfs merge=lfs -text
 *.exr          filter=lfs diff=lfs merge=lfs -text
