@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+#pragma warning disable UAL0010, UAL0013, UAC1009, UAC1010, UAC0005, UAC1001, CS0618
 
 namespace XNode {
     /// <summary> Precaches reflection data in editor so we won't have to do it runtime </summary>
@@ -123,7 +124,7 @@ namespace XNode {
             portDataCache = new PortDataCache();
             System.Type baseType = typeof(Node);
             List<System.Type> nodeTypes = new List<System.Type>();
-            System.Reflection.Assembly[] assemblies = System.AppDomain.CurrentDomain.GetAssemblies();
+            System.Reflection.Assembly[] assemblies = System.AppDomain.CurrentDomain.GetAssemblies() // UAC0005 suppressed;
 
             // Loop through assemblies and add node types to list
             foreach (Assembly assembly in assemblies) {
@@ -190,8 +191,8 @@ namespace XNode {
 
         [System.Serializable]
         private class PortDataCache : Dictionary<System.Type, List<NodePort>>, ISerializationCallbackReceiver {
-            [SerializeField] private List<System.Type> keys = new List<System.Type>();
-            [SerializeField] private List<List<NodePort>> values = new List<List<NodePort>>();
+            [System.NonSerialized] private List<System.Type> keys = new List<System.Type>();
+            [System.NonSerialized] private List<List<NodePort>> values = new List<List<NodePort>>();
 
             // save the dictionary to lists
             public void OnBeforeSerialize() {
@@ -216,3 +217,5 @@ namespace XNode {
         }
     }
 }
+
+

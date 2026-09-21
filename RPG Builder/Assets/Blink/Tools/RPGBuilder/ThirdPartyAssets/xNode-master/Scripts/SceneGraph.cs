@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using XNode;
+#pragma warning disable UAL0010, UAL0013, UAC1009, UAC1010, UAC0005, UAC1001, CS0618
 
 namespace XNode {
 	/// <summary> Lets you instantiate a node graph in the scene. This allows you to reference in-scene objects. </summary>

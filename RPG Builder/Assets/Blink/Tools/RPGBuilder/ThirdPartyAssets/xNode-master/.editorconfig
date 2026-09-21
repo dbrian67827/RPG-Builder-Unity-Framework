@@ -1,0 +1,12 @@
+root = true
+
+[*.cs]
+# Disable Unity 6000.7 analyzers for xNode third-party code
+dotnet_diagnostic.UAL0010.severity = none
+dotnet_diagnostic.UAL0013.severity = none
+dotnet_diagnostic.UAC1009.severity = none
+dotnet_diagnostic.UAC1010.severity = none
+dotnet_diagnostic.UAC0005.severity = none
+dotnet_diagnostic.UAC1001.severity = none
+dotnet_diagnostic.CS0618.severity = none
+dotnet_diagnostic.CS0619.severity = none

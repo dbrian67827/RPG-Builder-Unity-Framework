@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 using System;
+#pragma warning disable UAL0010, UAL0013, UAC1009, UAC1010, UAC0005, UAC1001
+
 using Object = UnityEngine.Object;
 
 
@@ -228,7 +230,9 @@ namespace XNodeEditor {
 
         /// <summary> Repaint all open NodeEditorWindows. </summary>
         public static void RepaintAll() {
-#if UNITY_6000_0_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+            NodeEditorWindow[] windows = FindObjectsByType<NodeEditorWindow>(FindObjectsInactive.Include);
+#elif UNITY_6000_0_OR_NEWER
             NodeEditorWindow[] windows = FindObjectsByType<NodeEditorWindow>(FindObjectsSortMode.None);
 #else
             NodeEditorWindow[] windows = Resources.FindObjectsOfTypeAll<NodeEditorWindow>();

@@ -4,6 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
+#pragma warning disable UAL0010, UAL0013, UAC1009, UAC1010, UAC0005, UAC1001, CS0618
 #endif
 
 namespace XNodeEditor {

@@ -5,6 +5,7 @@ using System.Reflection;
 using Sirenix.OdinInspector.Editor;
 using UnityEngine;
 using XNode;
+#pragma warning disable UAL0010, UAL0013, UAC1009, UAC1010, UAC0005, UAC1001, CS0618
 
 namespace XNodeEditor {
 	internal class OdinNodeInGraphAttributeProcessor<T> : OdinAttributeProcessor<T> where T : Node {

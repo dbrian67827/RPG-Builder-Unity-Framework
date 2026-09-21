@@ -1,0 +1,3 @@
+is_global = true
+build_property.UnityEnableAutoStaticsCleanupAnalysis = false
+build_property.UnityEnableAutoStaticsCleanupCodeGen = false

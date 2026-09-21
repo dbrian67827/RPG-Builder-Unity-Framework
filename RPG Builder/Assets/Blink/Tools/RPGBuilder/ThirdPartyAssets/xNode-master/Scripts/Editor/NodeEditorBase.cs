@@ -1,4 +1,6 @@
 ﻿using System;
+#pragma warning disable UAL0010, UAL0013, UAC1009, UAC1010, UAC0005, UAC1001
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -99,3 +101,4 @@ namespace XNodeEditor.Internal {
 		}
 	}
 }
+
