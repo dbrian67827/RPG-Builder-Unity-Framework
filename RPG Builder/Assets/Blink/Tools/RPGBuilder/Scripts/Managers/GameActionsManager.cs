@@ -551,7 +551,7 @@ public class GameActionsManager : MonoBehaviour
                     }
 
                     break;
-                // ==================== NEW FULL RPG GAME ACTIONS ====================
+                // Full RPG Expansion - Unity 6000.7.0b1
                 case GameActionsData.GameActionType.Title:
                     if (TitleManager.Instance != null) TitleManager.Instance.UnlockTitle(gameAction.TitleID);
                     break;
@@ -574,52 +574,50 @@ public class GameActionsManager : MonoBehaviour
                     if (LoreManager.Instance != null) LoreManager.Instance.UnlockLore(gameAction.LoreID);
                     break;
                 case GameActionsData.GameActionType.Bestiary:
-                    if (BestiaryManager.Instance != null) BestiaryManager.Instance.UnlockBestiary(gameAction.BestiaryID);
+                    if (BestiaryManager.Instance != null) BestiaryManager.Instance.Discover(gameAction.BestiaryID);
                     break;
                 case GameActionsData.GameActionType.Transmog:
-                    if (TransmogManager.Instance != null) TransmogManager.Instance.UnlockAppearance(gameAction.TransmogID);
+                    if (TransmogManager.Instance != null) TransmogManager.Instance.Unlock(gameAction.TransmogID);
                     break;
                 case GameActionsData.GameActionType.Weather:
-                    if (WeatherManager.Instance != null) WeatherManager.Instance.SetWeather(gameAction.WeatherID);
+                    if (WeatherManager.Instance != null) WeatherManager.Instance.ChangeWeather(gameAction.WeatherID);
                     break;
                 case GameActionsData.GameActionType.Paragon:
-                    if (ParagonManager.Instance != null) ParagonManager.Instance.AddParagonExp(gameAction.ParagonID, gameAction.Amount);
+                    if (ParagonManager.Instance != null) ParagonManager.Instance.AddExp(gameAction.Amount);
                     break;
                 case GameActionsData.GameActionType.Reputation:
-                    if (ReputationManager.Instance != null) ReputationManager.Instance.AddReputation(gameAction.FactionID, gameAction.Amount);
+                    if (ReputationManager.Instance != null) ReputationManager.Instance.AddReputation(gameAction.ReputationID, gameAction.Amount);
                     break;
                 case GameActionsData.GameActionType.Mail:
-                    if (MailManager.Instance != null) MailManager.Instance.SendMail(gameAction.TitleID);
+                case GameActionsData.GameActionType.SendMail:
+                    if (MailManager.Instance != null) MailManager.Instance.SendMail("System", "Reward", "You have received a reward");
                     break;
                 case GameActionsData.GameActionType.Bank:
-                    if (BankManager.Instance != null) BankManager.Instance.OpenBank();
+                    if (BankManager.Instance != null) BankManager.Instance.DepositItem(gameAction.ItemID);
                     break;
                 case GameActionsData.GameActionType.RepairAll:
-                    InventoryManagerExtended.RepairAllItems();
+                    InventoryManagerExtended.RepairAll();
                     break;
                 case GameActionsData.GameActionType.Shield:
-                    if (ShieldManager.Instance != null && entity != null) ShieldManager.Instance.AddShield(entity, gameAction.Amount, gameAction.FloatValue1, gameAction.EffectID, entity);
+                    if (ShieldManager.Instance != null) ShieldManager.Instance.AddShield("player", gameAction.EffectID, gameAction.Amount, 10f);
                     break;
                 case GameActionsData.GameActionType.Threat:
-                    if (ThreatManager.Instance != null && entity != null) ThreatManager.Instance.AddThreat(entity, entity, gameAction.Amount);
+                    if (ThreatManager.Instance != null) ThreatManager.Instance.AddThreat(gameAction.NPCID, "player", gameAction.Amount);
                     break;
                 case GameActionsData.GameActionType.ChangeWeather:
-                    if (WeatherManager.Instance != null) WeatherManager.Instance.TransitionToWeather(gameAction.WeatherID);
+                    if (WeatherManager.Instance != null) WeatherManager.Instance.ChangeWeather(gameAction.WeatherID);
                     break;
                 case GameActionsData.GameActionType.UnlockBestiary:
-                    if (BestiaryManager.Instance != null) BestiaryManager.Instance.UnlockBestiary(gameAction.BestiaryID);
+                    if (BestiaryManager.Instance != null) BestiaryManager.Instance.Discover(gameAction.BestiaryID);
                     break;
                 case GameActionsData.GameActionType.UnlockLore:
                     if (LoreManager.Instance != null) LoreManager.Instance.UnlockLore(gameAction.LoreID);
                     break;
-                case GameActionsData.GameActionType.SendMail:
-                    if (MailManager.Instance != null) MailManager.Instance.SendMail(gameAction.TitleID);
+                case GameActionsData.GameActionType.UnlockTransmog:
+                    if (TransmogManager.Instance != null) TransmogManager.Instance.Unlock(gameAction.TransmogID);
                     break;
                 case GameActionsData.GameActionType.AddParagonExp:
-                    if (ParagonManager.Instance != null) ParagonManager.Instance.AddParagonExp(gameAction.ParagonID, gameAction.Amount);
-                    break;
-                case GameActionsData.GameActionType.UnlockTransmog:
-                    if (TransmogManager.Instance != null) TransmogManager.Instance.UnlockAppearance(gameAction.TransmogID);
+                    if (ParagonManager.Instance != null) ParagonManager.Instance.AddExp(gameAction.Amount);
                     break;
                 case GameActionsData.GameActionType.StartWorldEvent:
                     if (WorldEventManager.Instance != null) WorldEventManager.Instance.StartEvent(gameAction.WorldEventID);
@@ -630,7 +628,25 @@ public class GameActionsManager : MonoBehaviour
                 case GameActionsData.GameActionType.EnterDungeon:
                     if (DungeonManager.Instance != null) DungeonManager.Instance.EnterDungeon(gameAction.DungeonID);
                     break;
-
+                case GameActionsData.GameActionType.ExitDungeon:
+                case GameActionsData.GameActionType.LeaveDungeon:
+                    if (DungeonManager.Instance != null) DungeonManager.Instance.ExitDungeon();
+                    break;
+                case GameActionsData.GameActionType.CompleteDungeon:
+                    if (DungeonManager.Instance != null) DungeonManager.Instance.CompleteDungeon();
+                    break;
+                case GameActionsData.GameActionType.JoinParty:
+                    if (PartyManager.Instance != null) PartyManager.Instance.JoinParty(new System.Collections.Generic.List<string>());
+                    break;
+                case GameActionsData.GameActionType.LeaveParty:
+                    if (PartyManager.Instance != null) PartyManager.Instance.LeaveParty();
+                    break;
+                case GameActionsData.GameActionType.JoinGuild:
+                    if (GuildManager.Instance != null) GuildManager.Instance.JoinGuild("Guild");
+                    break;
+                case GameActionsData.GameActionType.LeaveGuild:
+                    if (GuildManager.Instance != null) GuildManager.Instance.LeaveGuild();
+                    break;
             }
         }
     }

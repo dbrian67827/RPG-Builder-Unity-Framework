@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BLINK.RPGBuilder.Characters;
 using BLINK.RPGBuilder.Combat;
@@ -57,42 +57,41 @@ namespace BLINK.RPGBuilder.Managers
                         optionalResults.Add(result);
                 }
 
-                switch (mandatoryResults.Count > 0)
+                bool hasMandatory = mandatoryResults.Count > 0;
+                bool hasOptional = optionalResults.Count > 0;
+
+                if (hasMandatory && !hasOptional && mandatoryResults.Contains(false))
                 {
-                    case true when optionalResults.Count == 0 && mandatoryResults.Contains(false):
+                    requirementResult.Result = false;
+                    return requirementResult;
+                }
+                else if (hasMandatory && hasOptional)
+                {
+                    if (mandatoryResults.Contains(false))
+                    {
                         requirementResult.Result = false;
                         return requirementResult;
-                    case true when optionalResults.Count > 0:
+                    }
+                
+                    if (group.checkCount) 
+                        groupResults.Add(GetValidOptionalCount(optionalResults) >= group.requiredCount);
+                    else 
+                        groupResults.Add(optionalResults.Contains(true));
+                }
+                else
+                {
+                    if (mandatoryResults.Count == 0 && optionalResults.Count > 0)
                     {
-                        if (mandatoryResults.Contains(false))
-                        {
-                            requirementResult.Result = false;
-                            return requirementResult;
-                        }
-                    
                         if (group.checkCount) 
                             groupResults.Add(GetValidOptionalCount(optionalResults) >= group.requiredCount);
                         else 
                             groupResults.Add(optionalResults.Contains(true));
-                        break;
                     }
-                    default:
+                    else
                     {
-                        if (mandatoryResults.Count == 0 && optionalResults.Count > 0)
-                        {
-                            if (group.checkCount) 
-                                groupResults.Add(GetValidOptionalCount(optionalResults) >= group.requiredCount);
-                            else 
-                                groupResults.Add(optionalResults.Contains(true));
-                        }
-                        else
-                        {
-                            ProcessConsume(checkedEntity, requirementResult);
-                            requirementResult.Result = true;
-                            return requirementResult;
-                        }
-
-                        break;
+                        ProcessConsume(checkedEntity, requirementResult);
+                        requirementResult.Result = true;
+                        return requirementResult;
                     }
                 }
             }
@@ -254,14 +253,15 @@ namespace BLINK.RPGBuilder.Managers
                         
                         switch (requirement.EffectCondition)
                         {
-                            case RequirementsData.EffectCondition.Effect
-                                when !CombatUtilities.IsEffectActiveOnTarget(checkedEntity, requirement.EffectID):
-                                return false;
-                            case RequirementsData.EffectCondition.Effect when requirement.BoolBalue1:
-                                return ValueIsValid(
-                                    CombatUtilities.GetEffectStacks(checkedEntity, requirement.EffectID),
-                                    requirement.Amount1, requirement.Value);
                             case RequirementsData.EffectCondition.Effect:
+                                if (!CombatUtilities.IsEffectActiveOnTarget(checkedEntity, requirement.EffectID))
+                                    return false;
+                                if (requirement.BoolBalue1)
+                                {
+                                    return ValueIsValid(
+                                        CombatUtilities.GetEffectStacks(checkedEntity, requirement.EffectID),
+                                        requirement.Amount1, requirement.Value);
+                                }
                                 return true;
                             case RequirementsData.EffectCondition.EffectTag:
                                 return CombatUtilities.IsEffectTagActiveOnTarget(checkedEntity, requirement.EffectTag);
@@ -695,6 +695,84 @@ namespace BLINK.RPGBuilder.Managers
                                     : (int) checkedEntity.GetOutOfCombatTime(), requirement.Amount1, requirement.Value);
                     }
                     break;
+                // Full RPG Expansion - Unity 6000.7.0b1
+                case RequirementsData.RequirementType.Title:
+                    return TitleManager.Instance != null && TitleManager.Instance.IsTitleUnlocked(requirement.TitleID);
+                case RequirementsData.RequirementType.Achievement:
+                    return AchievementManager.Instance != null && AchievementManager.Instance.IsCompleted(requirement.AchievementID);
+                case RequirementsData.RequirementType.Mount:
+                    return MountManager.Instance != null && MountManager.Instance.IsMountUnlocked(requirement.MountID);
+                case RequirementsData.RequirementType.Pet:
+                    return PetManager.Instance != null && PetManager.Instance.IsPetUnlocked(requirement.PetID);
+                case RequirementsData.RequirementType.WorldEvent:
+                    return WorldEventManager.Instance != null && WorldEventManager.Instance.IsEventActive(requirement.WorldEventID);
+                case RequirementsData.RequirementType.Dungeon:
+                    return DungeonManager.Instance != null && !DungeonManager.Instance.IsOnLockout(requirement.DungeonID);
+                case RequirementsData.RequirementType.Lore:
+                    return LoreManager.Instance != null && LoreManager.Instance.IsLoreUnlocked(requirement.LoreID);
+                case RequirementsData.RequirementType.Bestiary:
+                    return BestiaryManager.Instance != null && BestiaryManager.Instance.IsDiscovered(requirement.BestiaryID);
+                case RequirementsData.RequirementType.Transmog:
+                    return TransmogManager.Instance != null && TransmogManager.Instance.IsUnlocked(requirement.TransmogID);
+                case RequirementsData.RequirementType.Weather:
+                    return WeatherManager.Instance != null && WeatherManager.Instance.GetCurrentWeatherID() == requirement.WeatherID;
+                case RequirementsData.RequirementType.Paragon:
+                    return ParagonManager.Instance != null && ParagonManager.Instance.GetLevel() >= requirement.Amount1;
+                case RequirementsData.RequirementType.Reputation:
+                    return ReputationManager.Instance != null && ReputationManager.Instance.GetReputation(requirement.ReputationID) >= requirement.Amount1;
+                case RequirementsData.RequirementType.Guild:
+                    return GuildManager.Instance != null && GuildManager.Instance.IsInGuild();
+                case RequirementsData.RequirementType.Party:
+                    return PartyManager.Instance != null && PartyManager.Instance.IsInParty();
+                case RequirementsData.RequirementType.ItemLevel:
+                    return InventoryManagerExtended.GetAverageItemLevel() >= requirement.ItemLevel;
+                case RequirementsData.RequirementType.AchievementPoints:
+                    return AchievementManager.Instance != null && AchievementManager.Instance.GetTotalPoints() >= requirement.AchievementPoints;
+                case RequirementsData.RequirementType.Honor:
+                    return true; // Placeholder - honor system
+                case RequirementsData.RequirementType.GuildLevel:
+                    return GuildManager.Instance != null && GuildManager.Instance.GetGuildLevel() >= requirement.Amount1;
+                case RequirementsData.RequirementType.TitleUnlocked:
+                    return TitleManager.Instance != null && TitleManager.Instance.IsTitleUnlocked(requirement.TitleID);
+                case RequirementsData.RequirementType.AchievementCompleted:
+                    return AchievementManager.Instance != null && AchievementManager.Instance.IsCompleted(requirement.AchievementID);
+                case RequirementsData.RequirementType.MountUnlocked:
+                    return MountManager.Instance != null && MountManager.Instance.IsMountUnlocked(requirement.MountID);
+                case RequirementsData.RequirementType.PetUnlocked:
+                    return PetManager.Instance != null && PetManager.Instance.IsPetUnlocked(requirement.PetID);
+                case RequirementsData.RequirementType.LoreUnlocked:
+                    return LoreManager.Instance != null && LoreManager.Instance.IsLoreUnlocked(requirement.LoreID);
+                case RequirementsData.RequirementType.BestiaryDiscovered:
+                    return BestiaryManager.Instance != null && BestiaryManager.Instance.IsDiscovered(requirement.BestiaryID);
+                case RequirementsData.RequirementType.TransmogUnlocked:
+                    return TransmogManager.Instance != null && TransmogManager.Instance.IsUnlocked(requirement.TransmogID);
+                case RequirementsData.RequirementType.WorldEventActive:
+                    return WorldEventManager.Instance != null && WorldEventManager.Instance.IsEventActive(requirement.WorldEventID);
+                case RequirementsData.RequirementType.WeatherActive:
+                    return WeatherManager.Instance != null && WeatherManager.Instance.GetCurrentWeatherID() == requirement.WeatherID;
+                case RequirementsData.RequirementType.DungeonLockout:
+                    return DungeonManager.Instance != null && !DungeonManager.Instance.IsOnLockout(requirement.DungeonID);
+                case RequirementsData.RequirementType.IsInDungeon:
+                    return DungeonManager.Instance != null && DungeonManager.Instance.IsInDungeon();
+                case RequirementsData.RequirementType.IsInParty:
+                    return PartyManager.Instance != null && PartyManager.Instance.IsInParty();
+                case RequirementsData.RequirementType.IsInGuild:
+                    return GuildManager.Instance != null && GuildManager.Instance.IsInGuild();
+                case RequirementsData.RequirementType.IsMounted:
+                    return MountManager.Instance != null && MountManager.Instance.IsMounted();
+                case RequirementsData.RequirementType.HasPet:
+                    return PetManager.Instance != null && PetManager.Instance.HasActivePet();
+                case RequirementsData.RequirementType.HasTitle:
+                    return TitleManager.Instance != null && TitleManager.Instance.GetActiveTitle() != -1;
+                case RequirementsData.RequirementType.ParagonLevel:
+                    return ParagonManager.Instance != null && ParagonManager.Instance.GetLevel() >= requirement.Amount1;
+                case RequirementsData.RequirementType.ReputationLevel:
+                    return ReputationManager.Instance != null && ReputationManager.Instance.GetReputation(requirement.ReputationID) >= requirement.Amount1;
+                case RequirementsData.RequirementType.HasBankItem:
+                case RequirementsData.RequirementType.HasMail:
+                case RequirementsData.RequirementType.HasHousing:
+                case RequirementsData.RequirementType.HasFishingLevel:
+                    return true; // Placeholders for future systems
             }
 
                 // ==================== NEW FULL RPG REQUIREMENTS ====================
