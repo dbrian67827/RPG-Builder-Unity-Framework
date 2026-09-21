@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +33,26 @@ namespace BLINK.RPGBuilder.WorldPersistence
         }
 
 #if UNITY_EDITOR
+#if UNITY_6000_4_OR_NEWER
+        [SerializeField] private EntityId instanceIdEntity = EntityId.None;
+        private void Awake()
+        {
+            if (Application.isPlaying)
+                return;
+
+            if (instanceIdEntity == EntityId.None)
+            {
+                instanceIdEntity = GetEntityId();
+                return;
+            }
+
+            if (instanceIdEntity != GetEntityId() && GetEntityId() == EntityId.None)
+            {
+                instanceIdEntity = GetEntityId();
+                ResetIdentifier();
+            }
+        }
+#else
         [SerializeField] private int instanceID = 0;
         private void Awake()
         {
@@ -51,6 +71,7 @@ namespace BLINK.RPGBuilder.WorldPersistence
                 ResetIdentifier();
             }
         }
+#endif
 #endif
 
         private IEnumerator Start()
