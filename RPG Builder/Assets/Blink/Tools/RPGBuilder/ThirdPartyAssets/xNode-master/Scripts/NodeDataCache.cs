@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -124,7 +124,7 @@ namespace XNode {
             portDataCache = new PortDataCache();
             System.Type baseType = typeof(Node);
             List<System.Type> nodeTypes = new List<System.Type>();
-            System.Reflection.Assembly[] assemblies = System.AppDomain.CurrentDomain.GetAssemblies() // UAC0005 suppressed;
+            System.Reflection.Assembly[] assemblies = System.AppDomain.CurrentDomain.GetAssemblies();
 
             // Loop through assemblies and add node types to list
             foreach (Assembly assembly in assemblies) {
