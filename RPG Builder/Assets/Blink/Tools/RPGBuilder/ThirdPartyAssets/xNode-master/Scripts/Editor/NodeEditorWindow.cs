@@ -193,6 +193,16 @@ namespace XNodeEditor {
         }
 
         [OnOpenAsset(0)]
+#if UNITY_6000_4_OR_NEWER
+        public static bool OnOpen(EntityId instanceID, int line) {
+            XNode.NodeGraph nodeGraph = EditorUtility.EntityIdToObject(instanceID) as XNode.NodeGraph;
+            if (nodeGraph != null) {
+                Open(nodeGraph);
+                return true;
+            }
+            return false;
+        }
+#else
         public static bool OnOpen(int instanceID, int line) {
             XNode.NodeGraph nodeGraph = EditorUtility.InstanceIDToObject(instanceID) as XNode.NodeGraph;
             if (nodeGraph != null) {
@@ -201,6 +211,7 @@ namespace XNodeEditor {
             }
             return false;
         }
+#endif
 
         /// <summary>Open the provided graph in the NodeEditor</summary>
         public static NodeEditorWindow Open(XNode.NodeGraph graph) {
@@ -217,7 +228,11 @@ namespace XNodeEditor {
 
         /// <summary> Repaint all open NodeEditorWindows. </summary>
         public static void RepaintAll() {
+#if UNITY_6000_0_OR_NEWER
+            NodeEditorWindow[] windows = FindObjectsByType<NodeEditorWindow>(FindObjectsSortMode.None);
+#else
             NodeEditorWindow[] windows = Resources.FindObjectsOfTypeAll<NodeEditorWindow>();
+#endif
             for (int i = 0; i < windows.Length; i++) {
                 windows[i].Repaint();
             }

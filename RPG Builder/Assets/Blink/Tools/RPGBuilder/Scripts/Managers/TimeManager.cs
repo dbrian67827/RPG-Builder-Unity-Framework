@@ -135,7 +135,7 @@ namespace BLINK.RPGBuilder.Managers
             if (RenderSettings.sun != null) directionalLight = RenderSettings.sun;
             else
             {
-                Light[] lights = FindObjectsOfType<Light>();
+                Light[] lights = FindObjectsByType<Light>(FindObjectsSortMode.None);
                 foreach (var light in lights)
                 {
                     if(light.type != LightType.Directional) continue;

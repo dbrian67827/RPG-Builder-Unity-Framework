@@ -157,7 +157,7 @@ namespace BLINK.Controller
 		private void Start()
 		{
 			ControllerEssentials = GetComponent<RPGBThirdPersonCharacterControllerEssentials>();
-			_playerCamera = FindObjectOfType<PlayerCamera>();
+			_playerCamera = FindFirstObjectByType<PlayerCamera>();
 
 			Controller.Init();
 			Controller.RpgbThirdPersonController = this;

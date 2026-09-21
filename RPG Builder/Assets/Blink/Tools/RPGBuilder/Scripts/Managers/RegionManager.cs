@@ -71,7 +71,7 @@ namespace BLINK.RPGBuilder.Managers
         {
             List<RegionCheckingData> allRegions = new List<RegionCheckingData>();
             
-            Region[] regionsRefs = FindObjectsOfType<Region>();
+            Region[] regionsRefs = FindObjectsByType<Region>(FindObjectsSortMode.None);
 
             foreach (var regionRef in regionsRefs)
             {

@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using BLINK.RPGBuilder.Managers;
@@ -45,6 +45,21 @@ public static class RequirementsData
         [GameSceneID] public int GameSceneID = -1;
         [QuestID] public int QuestID = -1;
         [DialogueID] public int DialogueID = -1;
+        [TitleID] public int TitleID = -1;
+        [AchievementID] public int AchievementID = -1;
+        [MountID] public int MountID = -1;
+        [PetID] public int PetID = -1;
+        [WorldEventID] public int WorldEventID = -1;
+        [DungeonID] public int DungeonID = -1;
+        [LoreID] public int LoreID = -1;
+        [BestiaryID] public int BestiaryID = -1;
+        [TransmogID] public int TransmogID = -1;
+        [WeatherID] public int WeatherID = -1;
+        [ParagonID] public int ParagonID = -1;
+        [ReputationID] public int ReputationID = -1;
+        [GuildID] public int GuildID = -1;
+        public int ItemLevel = 0;
+        public int AchievementPoints = 0;
 
         public Knowledge Knowledge;
         public State State;
@@ -131,6 +146,46 @@ public static class RequirementsData
         Mounted = 32,
         Grounded = 33,
         Time = 34,
+        Title = 35,
+        Achievement = 36,
+        Mount = 37,
+        Pet = 38,
+        WorldEvent = 39,
+        Dungeon = 40,
+        Lore = 41,
+        Bestiary = 42,
+        Transmog = 43,
+        Weather = 44,
+        Paragon = 45,
+        Reputation = 46,
+        Guild = 47,
+        Party = 48,
+        ItemLevel = 49,
+        AchievementPoints = 50,
+        Honor = 51,
+        GuildLevel = 52,
+        HasBankItem = 53,
+        HasMail = 54,
+        IsInDungeon = 55,
+        IsInParty = 56,
+        IsInGuild = 57,
+        IsMounted = 58,
+        HasPet = 59,
+        HasTitle = 60,
+        ReputationLevel = 61,
+        ParagonLevel = 62,
+        DungeonLockout = 63,
+        WorldEventActive = 64,
+        WeatherActive = 65,
+        LoreUnlocked = 66,
+        BestiaryDiscovered = 67,
+        TransmogUnlocked = 68,
+        MountUnlocked = 69,
+        PetUnlocked = 70,
+        TitleUnlocked = 71,
+        AchievementCompleted = 72,
+        HasHousing = 73,
+        HasFishingLevel = 74
     }
 
     public enum Knowledge

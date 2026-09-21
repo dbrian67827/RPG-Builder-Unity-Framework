@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -264,6 +264,15 @@ namespace XNodeEditor {
         }
 
         public static void CreateFromTemplate(string initialName, string templatePath) {
+#if UNITY_6000_4_OR_NEWER
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(
+                EntityId.None,
+                ScriptableObject.CreateInstance<DoCreateCodeFile>(),
+                initialName,
+                scriptIcon,
+                templatePath
+            );
+#elif UNITY_6000_0_OR_NEWER
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(
                 0,
                 ScriptableObject.CreateInstance<DoCreateCodeFile>(),
@@ -271,15 +280,40 @@ namespace XNodeEditor {
                 scriptIcon,
                 templatePath
             );
+#else
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(
+                0,
+                ScriptableObject.CreateInstance<DoCreateCodeFile>(),
+                initialName,
+                scriptIcon,
+                templatePath
+            );
+#endif
         }
 
         /// Inherits from EndNameAction, must override EndNameAction.Action
+#if UNITY_6000_4_OR_NEWER
+        public class DoCreateCodeFile : UnityEditor.ProjectWindowCallback.AssetCreationEndAction {
+            public override void Action(EntityId instanceId, string pathName, string resourceFile) {
+                Object o = CreateScript(pathName, resourceFile);
+                ProjectWindowUtil.ShowCreatedAsset(o);
+            }
+        }
+#elif UNITY_6000_0_OR_NEWER
+        public class DoCreateCodeFile : UnityEditor.ProjectWindowCallback.AssetCreationEndAction {
+            public override void Action(int instanceId, string pathName, string resourceFile) {
+                Object o = CreateScript(pathName, resourceFile);
+                ProjectWindowUtil.ShowCreatedAsset(o);
+            }
+        }
+#else
         public class DoCreateCodeFile : UnityEditor.ProjectWindowCallback.EndNameEditAction {
             public override void Action(int instanceId, string pathName, string resourceFile) {
                 Object o = CreateScript(pathName, resourceFile);
                 ProjectWindowUtil.ShowCreatedAsset(o);
             }
         }
+#endif
 
         /// <summary>Creates Script from Template's path.</summary>
         internal static UnityEngine.Object CreateScript(string pathName, string templatePath) {

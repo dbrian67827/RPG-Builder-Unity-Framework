@@ -12,8 +12,8 @@ namespace BLINK.Controller
 
 		public override void Init()
 		{
-			_playerInput = FindObjectOfType<PlayerInput>();
-			_playerCamera = FindObjectOfType<PlayerCamera>();
+			_playerInput = FindFirstObjectByType<PlayerInput>();
+			_playerCamera = FindFirstObjectByType<PlayerCamera>();
 		}
 
 		public override void OnCharacterUpdate()

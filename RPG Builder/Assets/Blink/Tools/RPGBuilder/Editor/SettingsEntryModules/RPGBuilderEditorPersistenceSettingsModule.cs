@@ -112,7 +112,7 @@ public class RPGBuilderEditorPersistenceSettingsModule : RPGBuilderEditorModule
                         RPGBuilderEditor.Instance.EditorSkin.GetStyle("HorizontalAddButton"), GUILayout.MinWidth(250),
                         GUILayout.ExpandWidth(true)))
                     {
-                        persistentObjects = FindObjectsOfType<SaverIdentifier>();
+                        persistentObjects = FindObjectsByType<SaverIdentifier>(FindObjectsSortMode.None);
                     }
 
                     if (persistentObjects != null)
