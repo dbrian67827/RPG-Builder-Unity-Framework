@@ -29,8 +29,6 @@ public static class GameActionsData
         [QuestID] public int QuestID = -1;
         [DialogueID] public int DialogueID = -1;
         [GameSceneID] public int GameSceneID = -1;
-
-        // New RPG Game Action IDs
         [TitleID] public int TitleID = -1;
         [AchievementID] public int AchievementID = -1;
         [MountID] public int MountID = -1;
@@ -39,13 +37,13 @@ public static class GameActionsData
         [DungeonID] public int DungeonID = -1;
         [LoreID] public int LoreID = -1;
         [BestiaryID] public int BestiaryID = -1;
-        [CraftingQualityID] public int CraftingQualityID = -1;
         [TransmogID] public int TransmogID = -1;
         [WeatherID] public int WeatherID = -1;
         [ParagonID] public int ParagonID = -1;
-        [RuneID] public int RuneID = -1;
-        [GlyphID] public int GlyphID = -1;
-        [ShopID] public int ShopID = -1;
+        [ReputationID] public int ReputationID = -1;
+        [GuildID] public int GuildID = -1;
+        public int MailID = -1;
+        public int BankID = -1;
 
         public AbilityAction AbilityAction;
         public NodeAction NodeAction;
@@ -113,7 +111,6 @@ public static class GameActionsData
         ResetSprint = 25,
         ResetBlocking = 26,
         Time = 27,
-        // New Full RPG Game Actions
         Title = 28,
         Achievement = 29,
         Mount = 30,
@@ -144,22 +141,22 @@ public static class GameActionsData
         Threat = 55,
         Shield = 56,
         DamageNumber = 57,
-        Localization = 58,
-        DailyReset = 59,
-        WeeklyReset = 60,
-        PlayCutscene = 61,
-        PlayDialogue = 62,
-        SpawnFishingSpot = 63,
-        ChangeWeather = 64,
-        UnlockBestiary = 65,
-        UnlockLore = 66,
-        SendMail = 67,
-        AddParagonExp = 68,
-        UnlockTransmog = 69,
-        StartWorldEvent = 70,
-        EndWorldEvent = 71,
-        EnterDungeon = 72,
-        LeaveDungeon = 73,
+        ChangeWeather = 58,
+        UnlockBestiary = 59,
+        UnlockLore = 60,
+        UnlockTransmog = 61,
+        SendMail = 62,
+        AddParagonExp = 63,
+        StartWorldEvent = 64,
+        EndWorldEvent = 65,
+        EnterDungeon = 66,
+        ExitDungeon = 67,
+        CompleteDungeon = 68,
+        JoinParty = 69,
+        LeaveParty = 70,
+        JoinGuild = 71,
+        LeaveGuild = 72,
+        LeaveDungeon = 73
     }
     
     public enum AbilityAction

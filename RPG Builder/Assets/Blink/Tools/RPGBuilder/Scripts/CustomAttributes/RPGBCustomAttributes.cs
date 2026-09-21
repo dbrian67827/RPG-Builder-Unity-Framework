@@ -72,6 +72,29 @@ public class RuneIDAttribute : IDAttribute {}
 public class GlyphIDAttribute : IDAttribute {}
 public class TalentIDAttribute : IDAttribute {}
  
+public class TitleIDAttribute : IDAttribute {}
+public class AchievementIDAttribute : IDAttribute {}
+public class MountIDAttribute : IDAttribute {}
+public class PetIDAttribute : IDAttribute {}
+public class WorldEventIDAttribute : IDAttribute {}
+public class DungeonIDAttribute : IDAttribute {}
+public class LoreIDAttribute : IDAttribute {}
+public class BestiaryIDAttribute : IDAttribute {}
+public class MailTemplateIDAttribute : IDAttribute {}
+public class CraftingQualityIDAttribute : IDAttribute {}
+public class ReputationRewardIDAttribute : IDAttribute {}
+public class TransmogIDAttribute : IDAttribute {}
+public class WeatherIDAttribute : IDAttribute {}
+public class ParagonIDAttribute : IDAttribute {}
+public class RuneIDAttribute : IDAttribute {}
+public class GlyphIDAttribute : IDAttribute {}
+public class ShopIDAttribute : IDAttribute {}
+public class ReputationIDAttribute : IDAttribute {}
+public class GuildIDAttribute : IDAttribute {}
+public class PartyIDAttribute : IDAttribute {}
+public class BankIDAttribute : IDAttribute {}
+public class MailIDAttribute : IDAttribute {}
+ 
 public class RPGDataListAttribute : BaseCustomAttribute {}
 public class RPGNonSerializedAttribute : BaseCustomAttribute {}
  

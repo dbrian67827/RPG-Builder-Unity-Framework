@@ -1,136 +1,58 @@
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using BLINK.RPGBuilder.Managers;
-using BLINK.RPGBuilder.Templates;
 
-public class RPGLore : RPGBuilderDatabaseEntry
+namespace BLINK.RPGBuilder.Templates
 {
-    [HideInInspector] public string _name;
-    [HideInInspector] public string _fileName;
-    [HideInInspector] public string displayName;
-    [HideInInspector] public Sprite icon;
-
-    public enum LoreCategory
+    [CreateAssetMenu(fileName = "New Lore", menuName = "Blink/RPGBuilder/Lore/New Lore")]
+    public class RPGLore : RPGBuilderDatabaseEntry
     {
-        History,
-        Characters,
-        Locations,
-        Creatures,
-        Items,
-        Magic,
-        Factions,
-        Events,
-        Religion,
-        Culture,
-        Bestiary,
-        Tutorial,
-        Secrets,
-        Custom
-    }
-
-    public LoreCategory category = LoreCategory.History;
-    public string subCategory = "";
-    
-    public string title = "Lore Title";
-    [TextArea(5,20)] public string content = "Lore content...";
-    [TextArea(3,10)] public string shortDescription = "Short description";
-    
-    public Sprite loreImage;
-    public GameObject loreModelPreview;
-    public AudioClip voiceOver;
-    
-    public bool isUnlockedByDefault = false;
-    public bool isSecret = false;
-    public bool showNotificationOnUnlock = true;
-    
-    public int sortOrder = 0;
-    public int requiredLevel = 0;
-    
-    [Serializable]
-    public class LoreConnection
-    {
-        [LoreID] public int loreID = -1;
-        public string connectionDescription = "Related to...";
-    }
-    [RPGDataList] public List<LoreConnection> connectedLore = new List<LoreConnection>();
-    
-    [Serializable]
-    public class LoreReward
-    {
-        public enum RewardType
-        {
-            Experience,
-            Currency,
-            Item,
-            Title,
-            Achievement,
-            StatBonus
-        }
-        public RewardType rewardType;
-        [CurrencyID] public int currencyID = -1;
-        [ItemID] public int itemID = -1;
-        [TitleID] public int titleID = -1;
-        [AchievementID] public int achievementID = -1;
-        [StatID] public int statID = -1;
-        public int amount = 1;
-        public float statAmount = 0f;
-    }
-    [RPGDataList] public List<LoreReward> rewards = new List<LoreReward>();
-    
-    public List<RequirementsData.RequirementGroup> Requirements = new List<RequirementsData.RequirementGroup>();
-    public bool UseRequirementsTemplate;
-    public RequirementsTemplate RequirementsTemplate;
-    
-    [RPGDataList] public List<GameActionsData.GameAction> OnUnlockActions = new List<GameActionsData.GameAction>();
-    public bool UseGameActionsTemplate;
-    public GameActionsTemplate GameActionsTemplate;
-    
-    public string unlockMessage = "Lore Unlocked!";
-    public GameObject unlockVFX;
-    public AudioClip unlockSFX;
-    
-    public bool isPartOfCollection = false;
-    public string collectionName = "";
-    public int collectionIndex = 0;
-    public int collectionTotal = 0;
-    
-    public void UpdateEntryData(RPGLore newEntryData)
-    {
-        ID = newEntryData.ID;
-        entryName = newEntryData.entryName;
-        entryFileName = newEntryData.entryFileName;
-        entryDisplayName = newEntryData.entryDisplayName;
-        entryIcon = newEntryData.entryIcon;
-        entryDescription = newEntryData.entryDescription;
-        
-        category = newEntryData.category;
-        subCategory = newEntryData.subCategory;
-        title = newEntryData.title;
-        content = newEntryData.content;
-        shortDescription = newEntryData.shortDescription;
-        loreImage = newEntryData.loreImage;
-        loreModelPreview = newEntryData.loreModelPreview;
-        voiceOver = newEntryData.voiceOver;
-        isUnlockedByDefault = newEntryData.isUnlockedByDefault;
-        isSecret = newEntryData.isSecret;
-        showNotificationOnUnlock = newEntryData.showNotificationOnUnlock;
-        sortOrder = newEntryData.sortOrder;
-        requiredLevel = newEntryData.requiredLevel;
-        connectedLore = newEntryData.connectedLore;
-        rewards = newEntryData.rewards;
-        Requirements = newEntryData.Requirements;
-        UseRequirementsTemplate = newEntryData.UseRequirementsTemplate;
-        RequirementsTemplate = newEntryData.RequirementsTemplate;
-        OnUnlockActions = newEntryData.OnUnlockActions;
-        UseGameActionsTemplate = newEntryData.UseGameActionsTemplate;
-        GameActionsTemplate = newEntryData.GameActionsTemplate;
-        unlockMessage = newEntryData.unlockMessage;
-        unlockVFX = newEntryData.unlockVFX;
-        unlockSFX = newEntryData.unlockSFX;
-        isPartOfCollection = newEntryData.isPartOfCollection;
-        collectionName = newEntryData.collectionName;
-        collectionIndex = newEntryData.collectionIndex;
-        collectionTotal = newEntryData.collectionTotal;
+        public string loreTitle = "New Lore";
+        public string loreText = "";
+        public Sprite icon;
+        public enum LoreCategory { History, Characters, Locations, Creatures, Items, Events, Factions, Magic, Religion, Technology, General }
+        public LoreCategory category = LoreCategory.General;
+        public string subcategory = "";
+        public bool isHidden = false;
+        public bool isSecret = false;
+        public int requiredLevel = 1;
+        public int requiredQuestID = -1;
+        public int requiredAchievementID = -1;
+        public int requiredItemID = -1;
+        public int requiredNPCID = -1;
+        public int requiredLoreID = -1;
+        public List<int> requiredLoreIDs = new List<int>();
+        public int parentLoreID = -1;
+        public List<int> childLoreIDs = new List<int>();
+        public int sortOrder = 0;
+        public bool isAccountWide = false;
+        public bool showNotification = true;
+        public GameObject unlockEffect;
+        public AudioClip unlockSound;
+        public int expReward = 0;
+        public List<int> rewardItemIDs = new List<int>();
+        public int achievementID = -1;
+        public bool hasImage = false;
+        public Sprite loreImage;
+        public bool hasAudio = false;
+        public AudioClip loreAudio;
+        public bool hasVideo = false;
+        public string videoPath = "";
+        public bool isCollectible = true;
+        public int totalPages = 1;
+        public int currentPage = 1;
+        public List<string> pages = new List<string>();
+        public bool hasChoices = false;
+        public List<string> choices = new List<string>();
+        public List<int> choiceLoreIDs = new List<int>();
+        public bool isBook = false;
+        public string bookTitle = "";
+        public string author = "";
+        public bool isLetter = false;
+        public string sender = "";
+        public string recipient = "";
+        public bool isJournal = false;
+        public string journalOwner = "";
     }
 }

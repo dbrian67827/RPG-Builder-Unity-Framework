@@ -1,198 +1,76 @@
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using BLINK.RPGBuilder.Managers;
-using BLINK.RPGBuilder.Templates;
 
-public class RPGWorldEvent : RPGBuilderDatabaseEntry
+namespace BLINK.RPGBuilder.Templates
 {
-    [HideInInspector] public string _name;
-    [HideInInspector] public string _fileName;
-    [HideInInspector] public string displayName;
-    [HideInInspector] public Sprite icon;
-
-    public enum WorldEventType
+    [CreateAssetMenu(fileName = "New World Event", menuName = "Blink/RPGBuilder/WorldEvents/New World Event")]
+    public class RPGWorldEvent : RPGBuilderDatabaseEntry
     {
-        Invasion,
-        BossSpawn,
-        GatheringBonus,
-        ExperienceBonus,
-        MerchantArrival,
-        WeatherEvent,
-        Holiday,
-        PvPEvent,
-        DungeonBonus,
-        CraftingBonus,
-        DoubleLoot,
-        Custom
-    }
-
-    public WorldEventType eventType = WorldEventType.Invasion;
-    public bool isRecurring = true;
-    public bool isRandom = false;
-    public bool isManualOnly = false;
-    
-    public float duration = 3600f; // seconds
-    public float cooldown = 7200f;
-    public float randomChance = 10f;
-    public float randomCheckInterval = 300f;
-    
-    public enum EventScheduleType
-    {
-        Always,
-        TimeOfDay,
-        DayOfWeek,
-        Monthly,
-        Yearly,
-        RealWorldTime,
-        CustomCondition
-    }
-    public EventScheduleType scheduleType = EventScheduleType.Always;
-    
-    public int startHour = 0;
-    public int endHour = 23;
-    public int startDay = 1;
-    public int endDay = 7;
-    
-    [Serializable]
-    public class EventLocation
-    {
-        [GameSceneID] public int gameSceneID = -1;
-        public RegionTemplate region;
-        public Vector3 position;
-        public float radius = 100f;
-        public bool useRegion = true;
-    }
-    [RPGDataList] public List<EventLocation> locations = new List<EventLocation>();
-    
-    [Serializable]
-    public class EventNPCSpawn
-    {
-        [NPCID] public int npcID = -1;
-        public int count = 1;
-        public float spawnRadius = 10f;
-        public bool isBoss = false;
-        public float respawnTime = 60f;
-    }
-    [RPGDataList] public List<EventNPCSpawn> npcSpawns = new List<EventNPCSpawn>();
-    
-    [Serializable]
-    public class EventBonus
-    {
-        public enum BonusType
-        {
-            Experience,
-            Currency,
-            Faction,
-            GatheringYield,
-            CraftingSpeed,
-            LootChance,
-            Damage,
-            Defense,
-            MovementSpeed,
-            Stat
-        }
-        public BonusType bonusType;
-        [CurrencyID] public int currencyID = -1;
-        [FactionID] public int factionID = -1;
-        [StatID] public int statID = -1;
-        public float bonusAmount = 1.5f; // multiplier
-        public bool isPercent = true;
-    }
-    [RPGDataList] public List<EventBonus> bonuses = new List<EventBonus>();
-    
-    [Serializable]
-    public class EventReward
-    {
-        [ItemID] public int itemID = -1;
-        [CurrencyID] public int currencyID = -1;
-        public int amount = 1;
-        public float chance = 100f;
-        public bool onlyOnCompletion = true;
-    }
-    [RPGDataList] public List<EventReward> rewards = new List<EventReward>();
-    
-    public List<RequirementsData.RequirementGroup> Requirements = new List<RequirementsData.RequirementGroup>();
-    public bool UseRequirementsTemplate;
-    public RequirementsTemplate RequirementsTemplate;
-    
-    [RPGDataList] public List<GameActionsData.GameAction> StartGameActions = new List<GameActionsData.GameAction>();
-    [RPGDataList] public List<GameActionsData.GameAction> EndGameActions = new List<GameActionsData.GameAction>();
-    [RPGDataList] public List<GameActionsData.GameAction> TickGameActions = new List<GameActionsData.GameAction>();
-    public bool UseGameActionsTemplate;
-    public GameActionsTemplate GameActionsTemplate;
-    
-    public string description;
-    public string startMessage = "A world event has begun!";
-    public string endMessage = "The world event has ended.";
-    public string activeDescription = "Event is active!";
-    
-    public GameObject startVFX;
-    public GameObject endVFX;
-    public GameObject activeVFX;
-    public AudioClip startSFX;
-    public AudioClip endSFX;
-    
-    public int minPlayersRequired = 1;
-    public int maxPlayers = 0; // 0 = unlimited
-    public bool scaleDifficultyWithPlayers = true;
-    public bool announceToAll = true;
-    public bool showOnMap = true;
-    public bool showTimer = true;
-    
-    public int maxCompletionsPerDay = 0;
-    public int maxCompletionsPerWeek = 0;
-    
-    public void UpdateEntryData(RPGWorldEvent newEntryData)
-    {
-        ID = newEntryData.ID;
-        entryName = newEntryData.entryName;
-        entryFileName = newEntryData.entryFileName;
-        entryDisplayName = newEntryData.entryDisplayName;
-        entryIcon = newEntryData.entryIcon;
-        entryDescription = newEntryData.entryDescription;
-        
-        eventType = newEntryData.eventType;
-        isRecurring = newEntryData.isRecurring;
-        isRandom = newEntryData.isRandom;
-        isManualOnly = newEntryData.isManualOnly;
-        duration = newEntryData.duration;
-        cooldown = newEntryData.cooldown;
-        randomChance = newEntryData.randomChance;
-        randomCheckInterval = newEntryData.randomCheckInterval;
-        scheduleType = newEntryData.scheduleType;
-        startHour = newEntryData.startHour;
-        endHour = newEntryData.endHour;
-        startDay = newEntryData.startDay;
-        endDay = newEntryData.endDay;
-        locations = newEntryData.locations;
-        npcSpawns = newEntryData.npcSpawns;
-        bonuses = newEntryData.bonuses;
-        rewards = newEntryData.rewards;
-        Requirements = newEntryData.Requirements;
-        UseRequirementsTemplate = newEntryData.UseRequirementsTemplate;
-        RequirementsTemplate = newEntryData.RequirementsTemplate;
-        StartGameActions = newEntryData.StartGameActions;
-        EndGameActions = newEntryData.EndGameActions;
-        TickGameActions = newEntryData.TickGameActions;
-        UseGameActionsTemplate = newEntryData.UseGameActionsTemplate;
-        GameActionsTemplate = newEntryData.GameActionsTemplate;
-        description = newEntryData.description;
-        startMessage = newEntryData.startMessage;
-        endMessage = newEntryData.endMessage;
-        activeDescription = newEntryData.activeDescription;
-        startVFX = newEntryData.startVFX;
-        endVFX = newEntryData.endVFX;
-        activeVFX = newEntryData.activeVFX;
-        startSFX = newEntryData.startSFX;
-        endSFX = newEntryData.endSFX;
-        minPlayersRequired = newEntryData.minPlayersRequired;
-        maxPlayers = newEntryData.maxPlayers;
-        scaleDifficultyWithPlayers = newEntryData.scaleDifficultyWithPlayers;
-        announceToAll = newEntryData.announceToAll;
-        showOnMap = newEntryData.showOnMap;
-        showTimer = newEntryData.showTimer;
-        maxCompletionsPerDay = newEntryData.maxCompletionsPerDay;
-        maxCompletionsPerWeek = newEntryData.maxCompletionsPerWeek;
+        public string eventName = "New World Event";
+        public string description = "";
+        public Sprite icon;
+        public enum WorldEventType { Invasion, Boss, Gathering, PvP, Holiday, Seasonal, Dynamic, Escort, Defense, Race, Treasure, Riddle, Dungeon, Raid }
+        public WorldEventType eventType = WorldEventType.Dynamic;
+        public bool isActive = false;
+        public bool isRepeatable = true;
+        public float duration = 3600f;
+        public float cooldown = 7200f;
+        public float startDelay = 0f;
+        public bool autoStart = false;
+        public bool scheduled = false;
+        public List<string> scheduleTimes = new List<string>();
+        public int requiredLevel = 1;
+        public int maxLevel = 100;
+        public int minPlayers = 1;
+        public int maxPlayers = 100;
+        public bool isPublic = true;
+        public bool isInstanced = false;
+        public int gameSceneID = -1;
+        public Vector3 eventLocation = Vector3.zero;
+        public float eventRadius = 100f;
+        public List<int> requiredQuests = new List<int>();
+        public List<int> requiredAchievements = new List<int>();
+        public List<int> spawnedNPCs = new List<int>();
+        public List<int> rewardItemIDs = new List<int>();
+        public List<int> rewardCurrencyIDs = new List<int>();
+        public int expReward = 100;
+        public int currencyRewardID = -1;
+        public int currencyRewardAmount = 0;
+        public List<BonusData> bonuses = new List<BonusData>();
+        public GameObject startEffect;
+        public GameObject endEffect;
+        public AudioClip startSound;
+        public AudioClip endSound;
+        public bool hasPhases = false;
+        public int totalPhases = 1;
+        public List<string> phaseNames = new List<string>();
+        public bool hasLeaderboard = false;
+        public bool hasTimer = true;
+        public float timeLimit = 1800f;
+        public bool failOnTimeout = true;
+        public bool broadcastStart = true;
+        public bool broadcastEnd = true;
+        public string startMessage = "A world event has started!";
+        public string endMessage = "The world event has ended!";
+        public bool isHoliday = false;
+        public string holidayName = "";
+        public bool hasWorldBuff = false;
+        public int worldBuffID = -1;
+        public float worldBuffDuration = 3600f;
+        public bool scalesWithPlayers = true;
+        public float scalingPerPlayer = 0.1f;
+        public string category = "General";
+        public int sortOrder = 0;
+        public bool isAccountWideProgress = false;
+        public bool requiresGuild = false;
+        public int requiredGuildLevel = 1;
+        public List<int> requiredReputationIDs = new List<int>();
+        public List<int> requiredReputationValues = new List<int>();
+        public bool isPvP = false;
+        public bool isCrossFaction = false;
+        public int requiredHonor = 0;
     }
 }

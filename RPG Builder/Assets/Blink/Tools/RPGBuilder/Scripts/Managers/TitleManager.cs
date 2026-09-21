@@ -1,119 +1,42 @@
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
-using BLINK.RPGBuilder.Characters;
 using UnityEngine;
+using BLINK.RPGBuilder.Templates;
+using BLINK.RPGBuilder.Characters;
 
 namespace BLINK.RPGBuilder.Managers
 {
     public class TitleManager : MonoBehaviour
     {
-        public static TitleManager Instance { get; private set; }
-
-        private List<int> unlockedTitles = new List<int>();
+        public static TitleManager Instance;
+        private HashSet<int> unlockedTitles = new HashSet<int>();
         private int activeTitleID = -1;
+        public System.Action<int> OnTitleUnlocked;
+        public System.Action<int> OnTitleChanged;
 
-        public Action<RPGTitle> OnTitleUnlocked;
-        public Action<RPGTitle> OnTitleEquipped;
-        public Action OnTitleUnequipped;
+        private void Awake() { Instance = this; DontDestroyOnLoad(gameObject); }
 
-        private void Awake()
+        public bool IsTitleUnlocked(int id) => unlockedTitles.Contains(id);
+        public void UnlockTitle(int id)
         {
-            if (Instance != null) return;
-            Instance = this;
-        }
-
-        private void Start()
-        {
-            LoadTitles();
-        }
-
-        private void LoadTitles()
-        {
-            if (Character.Instance != null && Character.Instance.CharacterData != null)
+            if (unlockedTitles.Contains(id)) return;
+            unlockedTitles.Add(id);
+            OnTitleUnlocked?.Invoke(id);
+            Debug.Log($"[Title] Unlocked {id}");
+            if (GameDatabase.Instance.GetTitles().TryGetValue(id, out var title))
             {
-                unlockedTitles = new List<int>(Character.Instance.CharacterData.UnlockedTitles ?? new List<int>());
-                activeTitleID = Character.Instance.CharacterData.ActiveTitleID;
+                if (title.bonuses != null) foreach (var b in title.bonuses) BonusManager.Instance?.ApplyBonus(b);
             }
         }
-
-        public void UnlockTitle(int titleID)
+        public void SetActiveTitle(int id) { activeTitleID = id; OnTitleChanged?.Invoke(id); }
+        public int GetActiveTitle() => activeTitleID;
+        public List<int> GetUnlockedTitles() => unlockedTitles.ToList();
+        public string GetActiveTitleText()
         {
-            if (unlockedTitles.Contains(titleID)) return;
-            if (!GameDatabase.Instance.GetTitles().ContainsKey(titleID)) return;
-
-            unlockedTitles.Add(titleID);
-            var title = GameDatabase.Instance.GetTitles()[titleID];
-            Debug.Log($"Title Unlocked: {title.titleText}");
-
-            // Game Actions
-            if (title.UseGameActionsTemplate && title.GameActionsTemplate != null)
-                GameActionsManager.Instance.ExecuteGameActions(title.GameActionsTemplate.GameActions, null, null);
-            else
-                GameActionsManager.Instance.ExecuteGameActions(title.GameActions, null, null);
-
-            OnTitleUnlocked?.Invoke(title);
-            SaveTitles();
-        }
-
-        public void EquipTitle(int titleID)
-        {
-            if (!unlockedTitles.Contains(titleID)) return;
-            activeTitleID = titleID;
-            var title = GameDatabase.Instance.GetTitles()[titleID];
-            OnTitleEquipped?.Invoke(title);
-            SaveTitles();
-        }
-
-        public void UnequipTitle()
-        {
-            activeTitleID = -1;
-            OnTitleUnequipped?.Invoke();
-            SaveTitles();
-        }
-
-        public bool IsTitleUnlocked(int titleID) => unlockedTitles.Contains(titleID);
-        public bool HasActiveTitle() => activeTitleID != -1;
-        public RPGTitle GetActiveTitle()
-        {
-            if (activeTitleID == -1) return null;
-            var titles = GameDatabase.Instance.GetTitles();
-            return titles.ContainsKey(activeTitleID) ? titles[activeTitleID] : null;
-        }
-
-        public string GetFormattedTitle(string playerName)
-        {
-            var active = GetActiveTitle();
-            if (active == null) return playerName;
-
-            string formatted = active.titleText.Replace("{playerName}", playerName);
-            if (active.isPrefix && !string.IsNullOrEmpty(active.prefixText))
-                formatted = active.prefixText + " " + playerName;
-            else if (active.isSuffix && !string.IsNullOrEmpty(active.suffixText))
-                formatted = playerName + " " + active.suffixText;
-
-            return formatted;
-        }
-
-        public List<RPGTitle> GetUnlockedTitles()
-        {
-            var result = new List<RPGTitle>();
-            var all = GameDatabase.Instance.GetTitles();
-            foreach (int id in unlockedTitles)
-                if (all.ContainsKey(id)) result.Add(all[id]);
-            return result;
-        }
-
-        public List<RPGTitle> GetTitlesByCategory(RPGTitle.TitleCategory category)
-        {
-            return GetUnlockedTitles().Where(t => t.category == category).ToList();
-        }
-
-        private void SaveTitles()
-        {
-            if (Character.Instance?.CharacterData == null) return;
-            Character.Instance.CharacterData.UnlockedTitles = new List<int>(unlockedTitles);
-            Character.Instance.CharacterData.ActiveTitleID = activeTitleID;
+            if (activeTitleID == -1) return "";
+            if (GameDatabase.Instance.GetTitles().TryGetValue(activeTitleID, out var t)) return t.titleText;
+            return "";
         }
     }
 }
