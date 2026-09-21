@@ -43,6 +43,29 @@ public class RPGResourceNode : RPGBuilderDatabaseEntry
         original.respawnTime = copied.respawnTime;
     }
     
+
+    // ==================== EXTENDED RESOURCE FEATURES ====================
+    public bool hasQuality = false;
+    [CraftingQualityID] public int qualityID = -1;
+    public float qualityChance = 10f;
+    public bool hasYieldScaling = true;
+    public float yieldPerSkillLevel = 0.1f;
+    public bool hasRareDrop = false;
+    [ItemID] public int rareDropItemID = -1;
+    public float rareDropChance = 5f;
+    public bool hasRespawnScaling = false;
+    public float respawnTimePerPlayer = 5f;
+    public bool hasDepletion = false;
+    public int maxGathersBeforeDepletion = 5;
+    public bool hasSkillCheck = true;
+    public int requiredSkillLevel = 1;
+    public float failChance = 0f;
+    public bool hasGatheringBonus = false;
+    public float gatheringSpeedBonus = 0f;
+    public bool hasMountBonus = false;
+    public bool hasPetBonus = false;
+
+
     public void UpdateEntryData(RPGResourceNode newEntryData)
     {
         ID = newEntryData.ID;

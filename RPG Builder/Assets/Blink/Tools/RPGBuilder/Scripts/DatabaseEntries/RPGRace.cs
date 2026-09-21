@@ -74,6 +74,27 @@ public class RPGRace : RPGBuilderDatabaseEntry
 
     public int allocationStatPoints;
     public List<CharacterEntries.AllocatedStatEntry> allocatedStatsEntries = new List<CharacterEntries.AllocatedStatEntry>();
+
+    // ==================== EXTENDED RACE FEATURES ====================
+    public bool hasRacialAbilities = false;
+    [RPGDataList] public System.Collections.Generic.List<int> racialAbilityIDs = new System.Collections.Generic.List<int>();
+    public bool hasRacialPassives = false;
+    [RPGDataList] public System.Collections.Generic.List<int> racialBonusIDs = new System.Collections.Generic.List<int>();
+    public bool hasRacialMount = false;
+    [MountID] public int racialMountID = -1;
+    public bool hasCustomization = true;
+    public int maxHairStyles = 10;
+    public int maxFacialHairStyles = 10;
+    public int maxFaceStyles = 10;
+    public bool hasAlliedRace = false;
+    [RaceID] public int alliedRaceID = -1;
+    public int requiredLevelForAlliedRace = 40;
+    [FactionID] public int startingFactionID = -1;
+    public bool hasStartingArea = false;
+    [GameSceneID] public int startingGameSceneID = -1;
+    public UnityEngine.Vector3 startingPosition;
+
+
     public void UpdateEntryData(RPGRace newEntryData)
     {
         ID = newEntryData.ID;

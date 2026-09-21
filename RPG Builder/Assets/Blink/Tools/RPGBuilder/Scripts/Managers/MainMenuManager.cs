@@ -108,9 +108,9 @@ namespace BLINK.RPGBuilder.Managers
             Cursor.lockState = CursorLockMode.None;
             
 
-            if (FindObjectOfType<RPGBuilderEssentials>() == null)
+            if (FindFirstObjectByType<RPGBuilderEssentials>() == null)
                 Instantiate(UISettings.RPGBuilderEssentialsPrefab, Vector3.zero, Quaternion.identity);
-            if (FindObjectOfType<LoadingScreenManager>() == null)
+            if (FindFirstObjectByType<LoadingScreenManager>() == null)
                 Instantiate(UISettings.LoadingScreenManagerPrefab, Vector3.zero, Quaternion.identity);
             
             disableAllCG();

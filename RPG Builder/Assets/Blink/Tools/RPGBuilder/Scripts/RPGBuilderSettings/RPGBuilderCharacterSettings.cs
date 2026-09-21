@@ -18,6 +18,29 @@ public class RPGBuilderCharacterSettings : RPGBuilderDatabaseEntry
     public int SprintStatDrainAmount;
     public float SprintStatDrainInterval;
     
+
+    [Header("APPEARANCE")]
+    public bool enableBarberShop = true;
+    public bool enableTransmog = true;
+    public bool enableDyeSystem = false;
+    public bool enableAppearanceSave = true;
+    public int maxSavedAppearances = 5;
+
+    [Header("MOVEMENT")]
+    public bool enableDoubleJump = false;
+    public bool enableDash = true;
+    public float dashCooldown = 5f;
+    public float dashDistance = 5f;
+    public bool enableGliding = false;
+    public bool enableSwimming = true;
+
+    [Header("INTERACTION")]
+    public bool enableAutoTarget = true;
+    public float interactionRange = 3f;
+    public bool enableClickToMove = false;
+    public bool enableAutoAttack = true;
+
+
     public void UpdateEntryData(RPGBuilderCharacterSettings newEntryData)
     {
         NoClasses = newEntryData.NoClasses;
@@ -28,5 +51,20 @@ public class RPGBuilderCharacterSettings : RPGBuilderDatabaseEntry
         SprintStatDrainID = newEntryData.SprintStatDrainID;
         SprintStatDrainInterval = newEntryData.SprintStatDrainInterval;
         SprintStatDrainAmount = newEntryData.SprintStatDrainAmount;
+        enableBarberShop = newEntryData.enableBarberShop;
+        enableTransmog = newEntryData.enableTransmog;
+        enableDyeSystem = newEntryData.enableDyeSystem;
+        enableAppearanceSave = newEntryData.enableAppearanceSave;
+        maxSavedAppearances = newEntryData.maxSavedAppearances;
+        enableDoubleJump = newEntryData.enableDoubleJump;
+        enableDash = newEntryData.enableDash;
+        dashCooldown = newEntryData.dashCooldown;
+        dashDistance = newEntryData.dashDistance;
+        enableGliding = newEntryData.enableGliding;
+        enableSwimming = newEntryData.enableSwimming;
+        enableAutoTarget = newEntryData.enableAutoTarget;
+        interactionRange = newEntryData.interactionRange;
+        enableClickToMove = newEntryData.enableClickToMove;
+        enableAutoAttack = newEntryData.enableAutoAttack;
     }
 }

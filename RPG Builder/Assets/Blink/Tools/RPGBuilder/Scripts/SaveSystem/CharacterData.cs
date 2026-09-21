@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using BLINK.RPGBuilder.Combat;
 using UnityEngine;
 
@@ -126,5 +126,109 @@ namespace BLINK.RPGBuilder.Characters
         public Dictionary<string, int> CustomIntData = new Dictionary<string, int>();
         public List<string> CustomIntDataKeys = new List<string>();
         public List<int> CustomIntDataValues = new List<int>();
+
+        // ========== NEW FULL RPG SYSTEMS ==========
+        [Header("TITLES")]
+        public List<int> UnlockedTitles = new List<int>();
+        public int ActiveTitleID = -1;
+
+        [Header("ACHIEVEMENTS")]
+        public List<CharacterEntries.AchievementEntry> Achievements = new List<CharacterEntries.AchievementEntry>();
+        public int AchievementPoints = 0;
+
+        [Header("MOUNTS")]
+        public List<int> UnlockedMounts = new List<int>();
+        public int ActiveMountID = -1;
+        public int FavoriteMountID = -1;
+
+        [Header("PETS")]
+        public List<int> UnlockedPets = new List<int>();
+        public int ActivePetID = -1;
+        public int FavoritePetID = -1;
+        public List<int> ActivePetAbilities = new List<int>();
+
+        [Header("LORE & CODEX")]
+        public List<int> UnlockedLore = new List<int>();
+        public List<int> UnlockedBestiary = new List<int>();
+        public List<CharacterEntries.BestiaryKillEntry> BestiaryKills = new List<CharacterEntries.BestiaryKillEntry>();
+
+        [Header("TRANSMOG")]
+        public List<int> UnlockedTransmog = new List<int>();
+        public List<CharacterEntries.TransmogEntry> EquippedTransmog = new List<CharacterEntries.TransmogEntry>();
+
+        [Header("BANK")]
+        public List<CharacterEntries.ItemEntry> BankItems = new List<CharacterEntries.ItemEntry>();
+        public int BankSlotsUnlocked = 50;
+        public List<CharacterEntries.CurrencyEntry> BankCurrencies = new List<CharacterEntries.CurrencyEntry>();
+
+        [Header("DUNGEONS & LOCKOUTS")]
+        public List<CharacterEntries.DungeonLockoutEntry> DungeonLockouts = new List<CharacterEntries.DungeonLockoutEntry>();
+        public List<int> CompletedDungeons = new List<int>();
+
+        [Header("REPUTATION")]
+        public List<CharacterEntries.FactionReputationEntry> FactionReputation = new List<CharacterEntries.FactionReputationEntry>();
+
+        [Header("WORLD EVENTS")]
+        public List<CharacterEntries.WorldEventCompletionEntry> WorldEventCompletions = new List<CharacterEntries.WorldEventCompletionEntry>();
+
+        [Header("DAILY / WEEKLY")]
+        public List<CharacterEntries.DailyQuestEntry> DailyQuests = new List<CharacterEntries.DailyQuestEntry>();
+        public long LastDailyResetTicks;
+        public long LastWeeklyResetTicks;
+
+        [Header("MAIL")]
+        public List<CharacterEntries.MailEntry> Mails = new List<CharacterEntries.MailEntry>();
+
+        [Header("PARAGON")]
+        public List<CharacterEntries.ParagonEntry> ParagonData = new List<CharacterEntries.ParagonEntry>();
+
+        [Header("RUNES & GLYPHS")]
+        public List<CharacterEntries.RuneEntry> Runes = new List<CharacterEntries.RuneEntry>();
+        public List<CharacterEntries.GlyphEntry> Glyphs = new List<CharacterEntries.GlyphEntry>();
+
+        [Header("ITEM DURABILITY")]
+        public List<CharacterEntries.ItemDurabilityEntry> ItemDurabilities = new List<CharacterEntries.ItemDurabilityEntry>();
+
+        [Header("CRAFTING")]
+        public int CraftingLevel = 1;
+        public int CraftingExperience = 0;
+        public List<int> MasteredRecipes = new List<int>();
+        public int FailedCrafts = 0;
+        public int SuccessfulCrafts = 0;
+
+        [Header("GUILD")]
+        public string GuildName = "";
+        public int GuildRank = 0;
+        public long GuildJoinTicks;
+
+        [Header("PARTY")]
+        public bool IsInParty = false;
+        public string PartyID = "";
+
+        [Header("PVP")]
+        public int HonorPoints = 0;
+        public int ArenaPoints = 0;
+        public int PvPKills = 0;
+        public int PvPDeaths = 0;
+        public int BattlegroundWins = 0;
+
+        [Header("HOUSING")]
+        public int HouseID = -1;
+        public List<int> UnlockedHousingItems = new List<int>();
+        public Vector3 HousePosition;
+
+        [Header("MINI-GAMES")]
+        public Dictionary<string, int> MiniGameHighScores = new Dictionary<string, int>();
+        public List<string> MiniGameHighScoreKeys = new List<string>();
+        public List<int> MiniGameHighScoreValues = new List<int>();
+
+        [Header("ACCOUNT WIDE")]
+        public bool IsAccountWideData = false;
+        public List<int> AccountUnlockedMounts = new List<int>();
+        public List<int> AccountUnlockedPets = new List<int>();
+        public List<int> AccountUnlockedTitles = new List<int>();
+        public List<int> AccountUnlockedTransmog = new List<int>();
+        public int AccountAchievementPoints = 0;
+        public long AccountCreationTicks;
     }
 }

@@ -70,6 +70,38 @@ public class RPGCraftingRecipe : RPGBuilderDatabaseEntry
         }
     }
 
+
+    // ==================== EXTENDED CRAFTING FEATURES ====================
+    public bool hasQualitySystem = true;
+    public float baseSuccessChance = 100f;
+    public float failureChance = 0f;
+    public bool loseMaterialsOnFailure = false;
+    public float bonusChancePerSkillLevel = 0.5f;
+    public float craftingTime = 2f;
+    public bool requiresCraftingStationLevel = false;
+    public int requiredStationLevel = 1;
+    public bool hasMultipleOutcomes = false;
+    [System.Serializable]
+    public class CraftingOutcome
+    {
+        [ItemID] public int itemID = -1;
+        public int minAmount = 1;
+        public int maxAmount = 1;
+        public float chance = 100f;
+        [CraftingQualityID] public int qualityID = -1;
+    }
+    [RPGDataList] public System.Collections.Generic.List<CraftingOutcome> possibleOutcomes = new System.Collections.Generic.List<CraftingOutcome>();
+    public bool hasExperienceReward = true;
+    public int craftingExperience = 10;
+    public bool hasSkillUpChance = true;
+    public float skillUpChance = 50f;
+    public bool isMasterRecipe = false;
+    public bool hasCooldown = false;
+    public float cooldownDuration = 0f;
+    public bool hasDailyLimit = false;
+    public int dailyLimit = 5;
+
+
     public void UpdateEntryData(RPGCraftingRecipe newEntryData)
     {
         ID = newEntryData.ID;

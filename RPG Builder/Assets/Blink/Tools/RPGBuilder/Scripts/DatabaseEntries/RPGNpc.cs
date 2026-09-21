@@ -160,6 +160,117 @@ public class RPGNpc : RPGBuilderDatabaseEntry
 
     public RPGBNPCFamily npcFamily;
     
+
+    // ==================== EXTENDED FULL RPG NPC FEATURES ====================
+    public float tetherDistance = 100f;
+    public bool useTether = true;
+    public bool returnToSpawnOnTether = true;
+    public float leashDistance = 50f;
+    public bool useLeash = false;
+    
+    public bool hasSchedule = false;
+    public bool wanderDuringDay = true;
+    public bool sleepAtNight = false;
+    public Vector3 dayPosition;
+    public Vector3 nightPosition;
+    
+    public bool isSocial = true;
+    public float socialAggroRadius = 10f;
+    public bool assistFriends = true;
+    
+    public bool hasGossip = false;
+    public string gossipText = "Hello there!";
+    public bool hasVendorRestock = true;
+    public float vendorRestockTime = 3600f;
+    public bool vendorHasLimitedStock = true;
+    
+    public bool hasReputation = false;
+    [FactionID] public int reputationFactionID = -1;
+    public int reputationGainOnKill = 0;
+    public int reputationLossOnKill = 0;
+    
+    public bool hasLootMethod = false;
+    public enum LootMethod { FreeForAll, RoundRobin, MasterLoot, NeedGreed, Personal }
+    public LootMethod lootMethod = LootMethod.FreeForAll;
+    
+    public bool hasRareSpawn = false;
+    public float rareSpawnChance = 5f;
+    public float rareSpawnCooldown = 3600f;
+    
+    public bool hasScaling = false;
+    public bool scaleWithPlayerLevel = false;
+    public bool scaleWithPartySize = false;
+    public float scalingFactorPerPlayer = 0.2f;
+    
+    public bool hasEnrage = false;
+    public float enrageTime = 300f;
+    public float enrageDamageMultiplier = 2f;
+    
+    public bool hasPhases = false;
+    public int phaseCount = 1;
+    public float phaseHealthPercent = 50f;
+    
+    public bool hasImmunities = false;
+    [RPGDataList] public List<RPGEffect.EFFECT_TYPE> immunities = new List<RPGEffect.EFFECT_TYPE>();
+    
+    public bool hasResistances = false;
+    [System.Serializable]
+    public class NPCResistance
+    {
+        [HideInInspector] public string damageType;
+        public RPGBDamageType DamageType;
+        public float resistancePercent = 0f;
+    }
+    [RPGDataList] public List<NPCResistance> resistances = new List<NPCResistance>();
+    
+    public bool hasSpecialAbilities = false;
+    [RPGDataList] public List<AIData.AIPhase> specialAbilities = new List<AIData.AIPhase>();
+    
+    public bool isWorldBoss = false;
+    public bool isDungeonBoss = false;
+    public bool isRaidBoss = false;
+    public bool showBossFrame = false;
+    public bool lockPlayersInCombat = false;
+    
+    public bool hasDialogueOnAggro = false;
+    public string aggroDialogue = "You dare challenge me?!";
+    public bool hasDialogueOnDeath = false;
+    public string deathDialogue = "Nooo!";
+    
+    public bool hasPatrolPath = false;
+    public PatrolPath patrolPath;
+    public bool patrolPathLoop = true;
+    public float patrolPathSpeed = 2f;
+    
+    public bool hasInteractionCooldown = false;
+    public float interactionCooldown = 5f;
+    
+    public bool hasCustomNameplate = false;
+    public Color nameplateColor = Color.white;
+    public bool showLevelInNameplate = true;
+    public bool showHealthBar = true;
+    public bool showManaBar = false;
+    
+    public bool hasMount = false;
+    [MountID] public int mountID = -1;
+    public bool mountOnSpawn = false;
+    
+    public bool hasPet = false;
+    [PetID] public int petID = -1;
+    public bool summonPetOnCombat = false;
+    
+    public bool hasTitle = false;
+    [TitleID] public int titleID = -1;
+    
+    public bool hasBestiary = false;
+    [BestiaryID] public int bestiaryID = -1;
+    public bool unlockBestiaryOnKill = true;
+    
+    public bool hasLore = false;
+    [LoreID] public int loreID = -1;
+    public bool unlockLoreOnKill = false;
+    
+
     public void UpdateEntryData(RPGNpc newEntryData)
     {
         ID = newEntryData.ID;
@@ -236,5 +347,82 @@ public class RPGNpc : RPGBuilderDatabaseEntry
         ResetPhaseAfterCombat = newEntryData.ResetPhaseAfterCombat;
         InstantlyHealAfterCombat = newEntryData.InstantlyHealAfterCombat;
         LootBagDuration = newEntryData.LootBagDuration;
+        tetherDistance = newEntryData.tetherDistance;
+        useTether = newEntryData.useTether;
+        returnToSpawnOnTether = newEntryData.returnToSpawnOnTether;
+        leashDistance = newEntryData.leashDistance;
+        useLeash = newEntryData.useLeash;
+        hasSchedule = newEntryData.hasSchedule;
+        wanderDuringDay = newEntryData.wanderDuringDay;
+        sleepAtNight = newEntryData.sleepAtNight;
+        dayPosition = newEntryData.dayPosition;
+        nightPosition = newEntryData.nightPosition;
+        isSocial = newEntryData.isSocial;
+        socialAggroRadius = newEntryData.socialAggroRadius;
+        assistFriends = newEntryData.assistFriends;
+        hasGossip = newEntryData.hasGossip;
+        gossipText = newEntryData.gossipText;
+        hasVendorRestock = newEntryData.hasVendorRestock;
+        vendorRestockTime = newEntryData.vendorRestockTime;
+        vendorHasLimitedStock = newEntryData.vendorHasLimitedStock;
+        hasReputation = newEntryData.hasReputation;
+        reputationFactionID = newEntryData.reputationFactionID;
+        reputationGainOnKill = newEntryData.reputationGainOnKill;
+        reputationLossOnKill = newEntryData.reputationLossOnKill;
+        hasLootMethod = newEntryData.hasLootMethod;
+        lootMethod = newEntryData.lootMethod;
+        hasRareSpawn = newEntryData.hasRareSpawn;
+        rareSpawnChance = newEntryData.rareSpawnChance;
+        rareSpawnCooldown = newEntryData.rareSpawnCooldown;
+        hasScaling = newEntryData.hasScaling;
+        scaleWithPlayerLevel = newEntryData.scaleWithPlayerLevel;
+        scaleWithPartySize = newEntryData.scaleWithPartySize;
+        scalingFactorPerPlayer = newEntryData.scalingFactorPerPlayer;
+        hasEnrage = newEntryData.hasEnrage;
+        enrageTime = newEntryData.enrageTime;
+        enrageDamageMultiplier = newEntryData.enrageDamageMultiplier;
+        hasPhases = newEntryData.hasPhases;
+        phaseCount = newEntryData.phaseCount;
+        phaseHealthPercent = newEntryData.phaseHealthPercent;
+        hasImmunities = newEntryData.hasImmunities;
+        immunities = newEntryData.immunities;
+        hasResistances = newEntryData.hasResistances;
+        resistances = newEntryData.resistances;
+        hasSpecialAbilities = newEntryData.hasSpecialAbilities;
+        specialAbilities = newEntryData.specialAbilities;
+        isWorldBoss = newEntryData.isWorldBoss;
+        isDungeonBoss = newEntryData.isDungeonBoss;
+        isRaidBoss = newEntryData.isRaidBoss;
+        showBossFrame = newEntryData.showBossFrame;
+        lockPlayersInCombat = newEntryData.lockPlayersInCombat;
+        hasDialogueOnAggro = newEntryData.hasDialogueOnAggro;
+        aggroDialogue = newEntryData.aggroDialogue;
+        hasDialogueOnDeath = newEntryData.hasDialogueOnDeath;
+        deathDialogue = newEntryData.deathDialogue;
+        hasPatrolPath = newEntryData.hasPatrolPath;
+        patrolPath = newEntryData.patrolPath;
+        patrolPathLoop = newEntryData.patrolPathLoop;
+        patrolPathSpeed = newEntryData.patrolPathSpeed;
+        hasInteractionCooldown = newEntryData.hasInteractionCooldown;
+        interactionCooldown = newEntryData.interactionCooldown;
+        hasCustomNameplate = newEntryData.hasCustomNameplate;
+        nameplateColor = newEntryData.nameplateColor;
+        showLevelInNameplate = newEntryData.showLevelInNameplate;
+        showHealthBar = newEntryData.showHealthBar;
+        showManaBar = newEntryData.showManaBar;
+        hasMount = newEntryData.hasMount;
+        mountID = newEntryData.mountID;
+        mountOnSpawn = newEntryData.mountOnSpawn;
+        hasPet = newEntryData.hasPet;
+        petID = newEntryData.petID;
+        summonPetOnCombat = newEntryData.summonPetOnCombat;
+        hasTitle = newEntryData.hasTitle;
+        titleID = newEntryData.titleID;
+        hasBestiary = newEntryData.hasBestiary;
+        bestiaryID = newEntryData.bestiaryID;
+        unlockBestiaryOnKill = newEntryData.unlockBestiaryOnKill;
+        hasLore = newEntryData.hasLore;
+        loreID = newEntryData.loreID;
+        unlockLoreOnKill = newEntryData.unlockLoreOnKill;
     }
 }

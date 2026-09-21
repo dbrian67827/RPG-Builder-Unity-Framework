@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using BLINK.RPGBuilder.Managers;
 using BLINK.RPGBuilder.WorldPersistence;
@@ -392,5 +392,123 @@ public class CharacterEntries
         public int CurrentMinute;
         public int CurrentSecond;
         public float GlobalSpeed;
+    }
+
+    // ==================== NEW FULL RPG ENTRIES ====================
+    [System.Serializable]
+    public class AchievementEntry
+    {
+        public int achievementID;
+        public bool isCompleted;
+        public bool isClaimed;
+        public int progress;
+        public long completedTimestamp;
+        public List<ObjectiveProgress> objectives = new List<ObjectiveProgress>();
+    }
+
+    [System.Serializable]
+    public class ObjectiveProgress
+    {
+        public int objectiveIndex;
+        public int currentAmount;
+    }
+
+    [System.Serializable]
+    public class TransmogEntry
+    {
+        public string slotName;
+        public int transmogID;
+    }
+
+    [System.Serializable]
+    public class DungeonLockoutEntry
+    {
+        public int dungeonID;
+        public long lockoutEndTicks;
+    }
+
+    [System.Serializable]
+    public class FactionReputationEntry
+    {
+        public int factionID;
+        public int reputation;
+    }
+
+    [System.Serializable]
+    public class BestiaryKillEntry
+    {
+        public int npcID;
+        public int killCount;
+    }
+
+    [System.Serializable]
+    public class ParagonEntry
+    {
+        public int paragonID;
+        public int level;
+        public int exp;
+        public List<int> unlockedNodes = new List<int>();
+        public List<NodeRankEntry> nodeRanks = new List<NodeRankEntry>();
+    }
+
+    [System.Serializable]
+    public class NodeRankEntry
+    {
+        public int nodeIndex;
+        public int rank;
+    }
+
+    [System.Serializable]
+    public class MailEntry
+    {
+        public int mailIndex;
+        public int templateID;
+        public string subject;
+        public string body;
+        public string sender;
+        public bool isRead;
+        public bool hasAttachments;
+        public long expiryTicks;
+        public long sentTicks;
+    }
+
+    [System.Serializable]
+    public class RuneEntry
+    {
+        public int runeID;
+        public int count;
+    }
+
+    [System.Serializable]
+    public class GlyphEntry
+    {
+        public int glyphID;
+        public bool isApplied;
+        public int appliedToAbilityID;
+    }
+
+    [System.Serializable]
+    public class ItemDurabilityEntry
+    {
+        public int itemDataID;
+        public int currentDurability;
+        public int maxDurability;
+    }
+
+    [System.Serializable]
+    public class DailyQuestEntry
+    {
+        public int questID;
+        public long lastCompletedTicks;
+        public int completionsToday;
+    }
+
+    [System.Serializable]
+    public class WorldEventCompletionEntry
+    {
+        public int eventID;
+        public long lastCompletedTicks;
+        public int completionsToday;
+        public int completionsThisWeek;
     }
 }

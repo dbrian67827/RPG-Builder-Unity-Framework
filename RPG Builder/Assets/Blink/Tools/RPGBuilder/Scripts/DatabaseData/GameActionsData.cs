@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using BLINK.RPGBuilder.Managers;
@@ -29,6 +29,23 @@ public static class GameActionsData
         [QuestID] public int QuestID = -1;
         [DialogueID] public int DialogueID = -1;
         [GameSceneID] public int GameSceneID = -1;
+
+        // New RPG Game Action IDs
+        [TitleID] public int TitleID = -1;
+        [AchievementID] public int AchievementID = -1;
+        [MountID] public int MountID = -1;
+        [PetID] public int PetID = -1;
+        [WorldEventID] public int WorldEventID = -1;
+        [DungeonID] public int DungeonID = -1;
+        [LoreID] public int LoreID = -1;
+        [BestiaryID] public int BestiaryID = -1;
+        [CraftingQualityID] public int CraftingQualityID = -1;
+        [TransmogID] public int TransmogID = -1;
+        [WeatherID] public int WeatherID = -1;
+        [ParagonID] public int ParagonID = -1;
+        [RuneID] public int RuneID = -1;
+        [GlyphID] public int GlyphID = -1;
+        [ShopID] public int ShopID = -1;
 
         public AbilityAction AbilityAction;
         public NodeAction NodeAction;
@@ -96,6 +113,53 @@ public static class GameActionsData
         ResetSprint = 25,
         ResetBlocking = 26,
         Time = 27,
+        // New Full RPG Game Actions
+        Title = 28,
+        Achievement = 29,
+        Mount = 30,
+        Pet = 31,
+        WorldEvent = 32,
+        Dungeon = 33,
+        Lore = 34,
+        Bestiary = 35,
+        CraftingQuality = 36,
+        Transmog = 37,
+        Weather = 38,
+        Paragon = 39,
+        Rune = 40,
+        Glyph = 41,
+        Shop = 42,
+        Reputation = 43,
+        Guild = 44,
+        Party = 45,
+        Mail = 46,
+        Auction = 47,
+        Bank = 48,
+        Trading = 49,
+        Housing = 50,
+        Fishing = 51,
+        TeleportToHouse = 52,
+        RepairAll = 53,
+        Durability = 54,
+        Threat = 55,
+        Shield = 56,
+        DamageNumber = 57,
+        Localization = 58,
+        DailyReset = 59,
+        WeeklyReset = 60,
+        PlayCutscene = 61,
+        PlayDialogue = 62,
+        SpawnFishingSpot = 63,
+        ChangeWeather = 64,
+        UnlockBestiary = 65,
+        UnlockLore = 66,
+        SendMail = 67,
+        AddParagonExp = 68,
+        UnlockTransmog = 69,
+        StartWorldEvent = 70,
+        EndWorldEvent = 71,
+        EnterDungeon = 72,
+        LeaveDungeon = 73,
     }
     
     public enum AbilityAction

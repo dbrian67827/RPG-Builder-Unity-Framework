@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using BLINK.RPGBuilder.Managers;
@@ -45,6 +45,24 @@ public static class RequirementsData
         [GameSceneID] public int GameSceneID = -1;
         [QuestID] public int QuestID = -1;
         [DialogueID] public int DialogueID = -1;
+
+        // New RPG Requirement IDs
+        [TitleID] public int TitleID = -1;
+        [AchievementID] public int AchievementID = -1;
+        [MountID] public int MountID = -1;
+        [PetID] public int PetID = -1;
+        [WorldEventID] public int WorldEventID = -1;
+        [DungeonID] public int DungeonID = -1;
+        [LoreID] public int LoreID = -1;
+        [BestiaryID] public int BestiaryID = -1;
+        [CraftingQualityID] public int CraftingQualityID = -1;
+        [TransmogID] public int TransmogID = -1;
+        [WeatherID] public int WeatherID = -1;
+        [ParagonID] public int ParagonID = -1;
+        [RuneID] public int RuneID = -1;
+        [GlyphID] public int GlyphID = -1;
+        [ShopID] public int ShopID = -1;
+        [ReputationRewardID] public int ReputationRewardID = -1;
 
         public Knowledge Knowledge;
         public State State;
@@ -131,6 +149,47 @@ public static class RequirementsData
         Mounted = 32,
         Grounded = 33,
         Time = 34,
+        // New Full RPG Requirements
+        Title = 35,
+        Achievement = 36,
+        Mount = 37,
+        Pet = 38,
+        WorldEvent = 39,
+        Dungeon = 40,
+        Lore = 41,
+        Bestiary = 42,
+        CraftingQuality = 43,
+        Transmog = 44,
+        Weather = 45,
+        Paragon = 46,
+        Rune = 47,
+        Glyph = 48,
+        Shop = 49,
+        Reputation = 50,
+        ReputationLevel = 51,
+        Guild = 52,
+        Party = 53,
+        PvP = 54,
+        Housing = 55,
+        Bank = 56,
+        Mail = 57,
+        Auction = 58,
+        Trading = 59,
+        Fishing = 60,
+        ItemLevel = 61,
+        AverageItemLevel = 62,
+        Durability = 63,
+        EnchantmentLevel = 64,
+        SkillLevel = 65,
+        WeaponTemplateLevel = 66,
+        TalentTreePoints = 67,
+        AchievementPoints = 68,
+        Honor = 69,
+        ArenaRating = 70,
+        GuildLevel = 71,
+        ParagonLevel = 72,
+        MountLevel = 73,
+        PetLevel = 74,
     }
 
     public enum Knowledge

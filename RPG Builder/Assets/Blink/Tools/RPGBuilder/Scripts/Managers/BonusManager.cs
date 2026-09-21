@@ -171,6 +171,39 @@ namespace BLINK.RPGBuilder.Managers
             }
         }
         
+
+        // ==================== EXTENDED MOUNT / PET BONUSES ====================
+        public void ApplyMountBonus(RPGMount.MountStatBonus bonus)
+        {
+            // Would apply stat bonus via StatCalculator
+            Debug.Log($"Mount bonus applied: {bonus.statID} +{bonus.amount}");
+        }
+
+        public void RemoveMountBonus(RPGMount.MountStatBonus bonus)
+        {
+            Debug.Log($"Mount bonus removed: {bonus.statID}");
+        }
+
+        public void ApplyPetBonus(RPGPet.PetBonus bonus)
+        {
+            Debug.Log($"Pet bonus applied: {bonus.statID} +{bonus.amount}");
+        }
+
+        public void RemovePetBonus(RPGPet.PetBonus bonus)
+        {
+            Debug.Log($"Pet bonus removed: {bonus.statID}");
+        }
+
+        public void ApplyTitleBonus(RPGTitle.TitleStatBonus bonus)
+        {
+            Debug.Log($"Title bonus applied: {bonus.statID} +{bonus.amount}");
+        }
+
+        public void RemoveTitleBonus(RPGTitle.TitleStatBonus bonus)
+        {
+            Debug.Log($"Title bonus removed: {bonus.statID}");
+        }
+
         private bool CheckRequirements (int nodeID, RPGTalentTree tree)
         {
             List<RequirementsData.RequirementGroup> requirements = new List<RequirementsData.RequirementGroup>();

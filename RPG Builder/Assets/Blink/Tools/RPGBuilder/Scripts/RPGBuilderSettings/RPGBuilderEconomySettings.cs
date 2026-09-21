@@ -53,6 +53,49 @@ public class RPGBuilderEconomySettings : RPGBuilderDatabaseEntry
         public float chance = 100f;
     }
 
+
+    [Header("BANK")]
+    public int BankSlots = 100;
+    public int BankSlotsPerTab = 25;
+    public int MaxBankTabs = 6;
+    [CurrencyID] public int BankTabCurrencyID = -1;
+    public int BankTabCost = 1000;
+    public float BankTabCostMultiplier = 2f;
+
+    [Header("AUCTION HOUSE")]
+    public bool EnableAuctionHouse = false;
+    public float AuctionHouseCutPercent = 5f;
+    public float AuctionDepositPercent = 5f;
+    public int MaxAuctionsPerPlayer = 20;
+    public float AuctionDurationMin = 3600f;
+    public float AuctionDurationMax = 172800f;
+
+    [Header("DURABILITY")]
+    public bool EnableDurability = true;
+    public float DurabilityLossOnDeathPercent = 10f;
+    public float RepairCostMultiplier = 0.1f;
+    public bool CanRepairInField = false;
+
+    [Header("CRAFTING QUALITY")]
+    public bool EnableCraftingQuality = true;
+    public float BaseQualityChance = 50f;
+    public float QualitySkillBonus = 0.5f;
+
+    [Header("SHOPS")]
+    public bool EnableDynamicPricing = false;
+    public bool EnableLimitedStock = true;
+    public bool EnableRestocking = true;
+    public float RestockInterval = 3600f;
+    public float PriceVariance = 0.2f;
+
+    [Header("LOOT")]
+    public bool EnablePersonalLoot = false;
+    public bool EnableMasterLoot = true;
+    public bool EnableNeedGreed = true;
+    public float LootRollTime = 60f;
+    public bool EnableAOELoot = true;
+
+
     public GameObject LootBagPrefab;
     
     public void UpdateEntryData(RPGBuilderEconomySettings newEntryData)
@@ -70,5 +113,34 @@ public class RPGBuilderEconomySettings : RPGBuilderDatabaseEntry
         socketTypeList = newEntryData.socketTypeList;
         weaponAnimatorOverrides = newEntryData.weaponAnimatorOverrides;
         LootBagPrefab = newEntryData.LootBagPrefab;
+        BankSlots = newEntryData.BankSlots;
+        BankSlotsPerTab = newEntryData.BankSlotsPerTab;
+        MaxBankTabs = newEntryData.MaxBankTabs;
+        BankTabCurrencyID = newEntryData.BankTabCurrencyID;
+        BankTabCost = newEntryData.BankTabCost;
+        BankTabCostMultiplier = newEntryData.BankTabCostMultiplier;
+        EnableAuctionHouse = newEntryData.EnableAuctionHouse;
+        AuctionHouseCutPercent = newEntryData.AuctionHouseCutPercent;
+        AuctionDepositPercent = newEntryData.AuctionDepositPercent;
+        MaxAuctionsPerPlayer = newEntryData.MaxAuctionsPerPlayer;
+        AuctionDurationMin = newEntryData.AuctionDurationMin;
+        AuctionDurationMax = newEntryData.AuctionDurationMax;
+        EnableDurability = newEntryData.EnableDurability;
+        DurabilityLossOnDeathPercent = newEntryData.DurabilityLossOnDeathPercent;
+        RepairCostMultiplier = newEntryData.RepairCostMultiplier;
+        CanRepairInField = newEntryData.CanRepairInField;
+        EnableCraftingQuality = newEntryData.EnableCraftingQuality;
+        BaseQualityChance = newEntryData.BaseQualityChance;
+        QualitySkillBonus = newEntryData.QualitySkillBonus;
+        EnableDynamicPricing = newEntryData.EnableDynamicPricing;
+        EnableLimitedStock = newEntryData.EnableLimitedStock;
+        EnableRestocking = newEntryData.EnableRestocking;
+        RestockInterval = newEntryData.RestockInterval;
+        PriceVariance = newEntryData.PriceVariance;
+        EnablePersonalLoot = newEntryData.EnablePersonalLoot;
+        EnableMasterLoot = newEntryData.EnableMasterLoot;
+        EnableNeedGreed = newEntryData.EnableNeedGreed;
+        LootRollTime = newEntryData.LootRollTime;
+        EnableAOELoot = newEntryData.EnableAOELoot;
     }
 }

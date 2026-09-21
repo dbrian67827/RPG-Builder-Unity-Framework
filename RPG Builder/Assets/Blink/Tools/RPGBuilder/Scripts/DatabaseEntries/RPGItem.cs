@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BLINK.RPGBuilder.Managers;
 using BLINK.RPGBuilder.Templates;
@@ -130,7 +130,129 @@ public class RPGItem : RPGBuilderDatabaseEntry
     public GameActionsTemplate GameActionsTemplate;
 
     public BodyCullingTemplate BodyCullingTemplate;
-    
+
+    // ==================== EXTENDED FULL RPG FEATURES ====================
+    public enum ItemBindType
+    {
+        None,
+        BindOnPickup,
+        BindOnEquip,
+        BindOnUse,
+        QuestItem,
+        AccountBound
+    }
+    public ItemBindType bindType = ItemBindType.None;
+    public bool isUnique = false;
+    public int uniqueMaxCount = 1;
+    public bool isQuestItem = false;
+    public bool isTradable = true;
+    public bool isDestroyable = true;
+    public bool isSellable = true;
+    public bool isDroppable = true;
+    public bool isStorableInBank = true;
+
+    public enum ItemQuality
+    {
+        Poor,
+        Common,
+        Uncommon,
+        Rare,
+        Epic,
+        Legendary,
+        Artifact,
+        Heirloom
+    }
+    // Legacy quality kept as ItemRarity, new tier system
+    public int itemLevel = 1;
+    public int requiredLevel = 1;
+    public int requiredItemLevel = 0;
+
+    public float weight = 0f;
+    public bool hasDurability = false;
+    public int maxDurability = 100;
+    public int durabilityLossOnDeath = 10;
+    public bool canBeRepaired = true;
+    [CurrencyID] public int repairCurrencyID = -1;
+    public float repairCostMultiplier = 0.1f;
+
+    public bool hasCooldown = false;
+    public float cooldownDuration = 0f;
+    [HideInInspector] public string cooldownTag;
+    public RPGBAbilityCooldownTag CooldownTag;
+    public bool shareCooldown = false;
+
+    public bool isConsumable = false;
+    public int maxUseCount = 1;
+    public bool consumeOnUse = true;
+    public float useCastTime = 0f;
+    public bool interruptOnMove = true;
+
+    public bool hasTransmog = false;
+    [TransmogID] public int transmogID = -1;
+    public bool unlockTransmogOnPickup = true;
+
+    [CraftingQualityID] public int craftingQualityID = -1;
+    public bool hasRandomQuality = false;
+
+    [RuneID] public int socketedRuneID = -1;
+    public bool canBeSocketedWithRune = false;
+
+    [GlyphID] public int appliedGlyphID = -1;
+
+    public bool isTwoHanded = false;
+    public bool canDualWield = false;
+
+    public float criticalChanceBonus = 0f;
+    public float criticalDamageBonus = 0f;
+
+    public bool hasSetBonus = false;
+    [GearSetID] public int gearSetID = -1;
+
+    public bool hasAppearanceOverride = false;
+    public GameObject appearanceOverrideModel;
+
+    public bool hasUseSound = false;
+    public AudioClip useSound;
+    public GameObject useEffect;
+
+    public bool hasLevelScaling = false;
+    public float scalingFactor = 1f;
+    public int scalingMaxLevel = 60;
+
+    public bool isCraftedItem = false;
+    [RecipeID] public int craftedFromRecipeID = -1;
+
+    public bool hasDeconstruction = false;
+    [Serializable]
+    public class DeconstructionResult
+    {
+        [ItemID] public int itemID = -1;
+        [CurrencyID] public int currencyID = -1;
+        public int minAmount = 1;
+        public int maxAmount = 1;
+        public float chance = 100f;
+    }
+    [RPGDataList] public List<DeconstructionResult> deconstructionResults = new List<DeconstructionResult>();
+
+    public bool hasLore = false;
+    [LoreID] public int loreID = -1;
+
+    public bool showInCodex = true;
+    public bool isCollectionItem = false;
+    public string collectionCategory = "";
+
+    // Economy extended
+    public bool hasDynamicPrice = false;
+    public float priceVariance = 0.2f;
+    public bool isAuctionable = true;
+    public float auctionDepositRate = 0.05f;
+
+    // Tooltip extended
+    public bool showItemLevel = true;
+    public bool showDurability = true;
+    public bool showBindType = true;
+    public bool showStatsComparison = true;
+
     public void UpdateEntryData(RPGItem newEntryData)
     {
         ID = newEntryData.ID;
@@ -181,5 +303,74 @@ public class RPGItem : RPGBuilderDatabaseEntry
         UseRequirementsTemplate = newEntryData.UseRequirementsTemplate;
         RequirementsTemplate = newEntryData.RequirementsTemplate;
         BodyCullingTemplate = newEntryData.BodyCullingTemplate;
+
+        // Extended
+        bindType = newEntryData.bindType;
+        isUnique = newEntryData.isUnique;
+        uniqueMaxCount = newEntryData.uniqueMaxCount;
+        isQuestItem = newEntryData.isQuestItem;
+        isTradable = newEntryData.isTradable;
+        isDestroyable = newEntryData.isDestroyable;
+        isSellable = newEntryData.isSellable;
+        isDroppable = newEntryData.isDroppable;
+        isStorableInBank = newEntryData.isStorableInBank;
+        itemLevel = newEntryData.itemLevel;
+        requiredLevel = newEntryData.requiredLevel;
+        requiredItemLevel = newEntryData.requiredItemLevel;
+        weight = newEntryData.weight;
+        hasDurability = newEntryData.hasDurability;
+        maxDurability = newEntryData.maxDurability;
+        durabilityLossOnDeath = newEntryData.durabilityLossOnDeath;
+        canBeRepaired = newEntryData.canBeRepaired;
+        repairCurrencyID = newEntryData.repairCurrencyID;
+        repairCostMultiplier = newEntryData.repairCostMultiplier;
+        hasCooldown = newEntryData.hasCooldown;
+        cooldownDuration = newEntryData.cooldownDuration;
+        CooldownTag = newEntryData.CooldownTag;
+        shareCooldown = newEntryData.shareCooldown;
+        isConsumable = newEntryData.isConsumable;
+        maxUseCount = newEntryData.maxUseCount;
+        consumeOnUse = newEntryData.consumeOnUse;
+        useCastTime = newEntryData.useCastTime;
+        interruptOnMove = newEntryData.interruptOnMove;
+        hasTransmog = newEntryData.hasTransmog;
+        transmogID = newEntryData.transmogID;
+        unlockTransmogOnPickup = newEntryData.unlockTransmogOnPickup;
+        craftingQualityID = newEntryData.craftingQualityID;
+        hasRandomQuality = newEntryData.hasRandomQuality;
+        socketedRuneID = newEntryData.socketedRuneID;
+        canBeSocketedWithRune = newEntryData.canBeSocketedWithRune;
+        appliedGlyphID = newEntryData.appliedGlyphID;
+        isTwoHanded = newEntryData.isTwoHanded;
+        canDualWield = newEntryData.canDualWield;
+        criticalChanceBonus = newEntryData.criticalChanceBonus;
+        criticalDamageBonus = newEntryData.criticalDamageBonus;
+        hasSetBonus = newEntryData.hasSetBonus;
+        gearSetID = newEntryData.gearSetID;
+        hasAppearanceOverride = newEntryData.hasAppearanceOverride;
+        appearanceOverrideModel = newEntryData.appearanceOverrideModel;
+        hasUseSound = newEntryData.hasUseSound;
+        useSound = newEntryData.useSound;
+        useEffect = newEntryData.useEffect;
+        hasLevelScaling = newEntryData.hasLevelScaling;
+        scalingFactor = newEntryData.scalingFactor;
+        scalingMaxLevel = newEntryData.scalingMaxLevel;
+        isCraftedItem = newEntryData.isCraftedItem;
+        craftedFromRecipeID = newEntryData.craftedFromRecipeID;
+        hasDeconstruction = newEntryData.hasDeconstruction;
+        deconstructionResults = newEntryData.deconstructionResults;
+        hasLore = newEntryData.hasLore;
+        loreID = newEntryData.loreID;
+        showInCodex = newEntryData.showInCodex;
+        isCollectionItem = newEntryData.isCollectionItem;
+        collectionCategory = newEntryData.collectionCategory;
+        hasDynamicPrice = newEntryData.hasDynamicPrice;
+        priceVariance = newEntryData.priceVariance;
+        isAuctionable = newEntryData.isAuctionable;
+        auctionDepositRate = newEntryData.auctionDepositRate;
+        showItemLevel = newEntryData.showItemLevel;
+        showDurability = newEntryData.showDurability;
+        showBindType = newEntryData.showBindType;
+        showStatsComparison = newEntryData.showStatsComparison;
     }
 }

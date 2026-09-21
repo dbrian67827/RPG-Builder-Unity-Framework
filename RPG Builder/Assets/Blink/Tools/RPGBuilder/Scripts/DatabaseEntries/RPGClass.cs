@@ -57,6 +57,35 @@ public class RPGClass : RPGBuilderDatabaseEntry
     [RPGDataList] public List<CharacterEntries.AllocatedStatEntry> allocatedStatsEntries = new List<CharacterEntries.AllocatedStatEntry>();
     
     [RPGDataList] public List<CharacterEntries.AllocatedStatEntry> allocatedStatsEntriesGame = new List<CharacterEntries.AllocatedStatEntry>();
+
+    // ==================== EXTENDED CLASS FEATURES ====================
+    public bool hasSpecializations = false;
+    [System.Serializable]
+    public class ClassSpecialization
+    {
+        public string specName = "Specialization";
+        public string description = "";
+        public Sprite icon;
+        public int requiredLevel = 10;
+        [RPGDataList] public System.Collections.Generic.List<int> bonusAbilities = new System.Collections.Generic.List<int>();
+        [RPGDataList] public System.Collections.Generic.List<int> bonusStats = new System.Collections.Generic.List<int>();
+    }
+    [RPGDataList] public System.Collections.Generic.List<ClassSpecialization> specializations = new System.Collections.Generic.List<ClassSpecialization>();
+    public int baseHealth = 100;
+    public int baseMana = 100;
+    public float healthPerLevel = 10f;
+    public float manaPerLevel = 10f;
+    public bool hasMastery = false;
+    public string masteryDescription = "";
+    [StatID] public int masteryStatID = -1;
+    public bool hasStartingItems = false;
+    [RPGDataList] public System.Collections.Generic.List<int> startingItemIDs = new System.Collections.Generic.List<int>();
+    public bool hasClassMount = false;
+    [MountID] public int classMountID = -1;
+    public bool hasClassTitle = false;
+    [TitleID] public int classTitleID = -1;
+
+
     public void UpdateEntryData(RPGClass newEntryData)
     {
         ID = newEntryData.ID;

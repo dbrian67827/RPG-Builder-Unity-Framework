@@ -157,6 +157,36 @@ public class RPGStat : RPGBuilderDatabaseEntry
     [HideInInspector] public string StatUICategory;
     public RPGBStatCategory StatCategory;
     
+
+    // ==================== EXTENDED STAT FEATURES ====================
+    public bool hasCap = false;
+    public float capValue = 100f;
+    public bool hasDiminishingReturns = false;
+    public float diminishingReturnStart = 50f;
+    public float diminishingReturnFactor = 0.5f;
+    public bool isResistance = false;
+    public bool isPercentage = false;
+    public bool showInCharacterPanel = true;
+    public bool showInTooltip = true;
+    public int displayOrder = 0;
+    public bool isPrimaryStat = false;
+    public bool isSecondaryStat = false;
+    public float scalingPerLevel = 0f;
+    public bool hasScalingFormula = false;
+    public string scalingFormula = "";
+    public bool isVitalityStat = false;
+    public bool isResourceStat = false;
+    public bool regenerates = false;
+    public float regenRate = 1f;
+    public float regenDelay = 5f;
+    public bool hasOvercapBonus = false;
+    public float overcapBonusFactor = 0.1f;
+    public bool showAsBar = false;
+    public Color barColor = Color.white;
+    public bool isHidden = false;
+    public bool isAccountWide = false;
+
+
     public void UpdateEntryData(RPGStat newEntryData)
     {
         ID = newEntryData.ID;

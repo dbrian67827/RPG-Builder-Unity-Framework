@@ -42,6 +42,43 @@ public class RPGBuilderWorldSettings : RPGBuilderDatabaseEntry
     public float SecondDuration = 60;
     public float HourDuration = 60;
     
+
+    [Header("WORLD MAP")]
+    public bool enableWorldMap = true;
+    public bool enableMinimap = true;
+    public bool enableFogOfWar = true;
+    public bool enablePOI = true;
+    public bool enableWaypoints = true;
+    public bool enableFastTravel = true;
+    [CurrencyID] public int fastTravelCurrencyID = -1;
+    public int fastTravelCost = 10;
+
+    [Header("WEATHER")]
+    public bool enableWeatherSystem = true;
+    public float weatherChangeInterval = 600f;
+    public bool enableWeatherEffectsOnGameplay = false;
+
+    [Header("DUNGEONS")]
+    public bool enableDungeonSystem = true;
+    public bool enableRaidSystem = true;
+    public bool enableLockouts = true;
+
+    [Header("EVENTS")]
+    public bool enableDynamicEvents = true;
+    public bool enableWorldBosses = true;
+    public float worldBossRespawnTime = 3600f;
+
+    [Header("HOUSING")]
+    public bool enableHousing = false;
+    public int maxHousesPerPlayer = 1;
+    public int maxFurniturePerHouse = 100;
+
+    [Header("FISHING & GATHERING")]
+    public bool enableFishing = true;
+    public bool enableHunting = false;
+    public bool enableTreasureHunting = false;
+
+
     public void UpdateEntryData(RPGBuilderWorldSettings newEntryData)
     {
         dialogueKeywordsList = newEntryData.dialogueKeywordsList;
@@ -80,5 +117,28 @@ public class RPGBuilderWorldSettings : RPGBuilderDatabaseEntry
         HoursPerDay = newEntryData.HoursPerDay;
         MinutesPerHour = newEntryData.MinutesPerHour;
         SecondsPerMinutes = newEntryData.SecondsPerMinutes;
+        enableWorldMap = newEntryData.enableWorldMap;
+        enableMinimap = newEntryData.enableMinimap;
+        enableFogOfWar = newEntryData.enableFogOfWar;
+        enablePOI = newEntryData.enablePOI;
+        enableWaypoints = newEntryData.enableWaypoints;
+        enableFastTravel = newEntryData.enableFastTravel;
+        fastTravelCurrencyID = newEntryData.fastTravelCurrencyID;
+        fastTravelCost = newEntryData.fastTravelCost;
+        enableWeatherSystem = newEntryData.enableWeatherSystem;
+        weatherChangeInterval = newEntryData.weatherChangeInterval;
+        enableWeatherEffectsOnGameplay = newEntryData.enableWeatherEffectsOnGameplay;
+        enableDungeonSystem = newEntryData.enableDungeonSystem;
+        enableRaidSystem = newEntryData.enableRaidSystem;
+        enableLockouts = newEntryData.enableLockouts;
+        enableDynamicEvents = newEntryData.enableDynamicEvents;
+        enableWorldBosses = newEntryData.enableWorldBosses;
+        worldBossRespawnTime = newEntryData.worldBossRespawnTime;
+        enableHousing = newEntryData.enableHousing;
+        maxHousesPerPlayer = newEntryData.maxHousesPerPlayer;
+        maxFurniturePerHouse = newEntryData.maxFurniturePerHouse;
+        enableFishing = newEntryData.enableFishing;
+        enableHunting = newEntryData.enableHunting;
+        enableTreasureHunting = newEntryData.enableTreasureHunting;
     }
 }

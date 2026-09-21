@@ -36,6 +36,33 @@ public class RPGFaction : RPGBuilderDatabaseEntry
 
     [RPGDataList] public List<Faction_Interaction_DATA> factionInteractions = new List<Faction_Interaction_DATA>();
     
+
+    // ==================== EXTENDED FACTION FEATURES ====================
+    public bool hasReputationLevels = true;
+    [System.Serializable]
+    public class ReputationLevel
+    {
+        public string levelName = "Neutral";
+        public int requiredReputation = 0;
+        public UnityEngine.Color color = UnityEngine.Color.white;
+        public bool isHostile = false;
+        public bool isFriendly = false;
+    }
+    [RPGDataList] public System.Collections.Generic.List<ReputationLevel> reputationLevels = new System.Collections.Generic.List<ReputationLevel>();
+    public bool hasReputationDecay = false;
+    public float decayRate = 1f;
+    public float decayInterval = 86400f;
+    public bool hasReputationBonuses = false;
+    public float reputationBonusPerLevel = 0.1f;
+    public bool isPlayerFaction = false;
+    public bool isEnemyFaction = false;
+    public bool hasGuildReputation = false;
+    public bool hasParagonReputation = false;
+    public int paragonReputationCap = 10000;
+    public bool hasWeeklyCap = false;
+    public int weeklyCap = 10000;
+
+
     public void UpdateEntryData(RPGFaction newEntryData)
     {
         ID = newEntryData.ID;

@@ -697,6 +697,45 @@ namespace BLINK.RPGBuilder.Managers
                     break;
             }
 
+                // ==================== NEW FULL RPG REQUIREMENTS ====================
+                case RequirementsData.RequirementType.Title:
+                    return TitleManager.Instance != null && TitleManager.Instance.IsTitleUnlocked(requirement.TitleID);
+                case RequirementsData.RequirementType.Achievement:
+                    return AchievementManager.Instance != null && AchievementManager.Instance.IsAchievementCompleted(requirement.AchievementID);
+                case RequirementsData.RequirementType.Mount:
+                    return MountManager.Instance != null && MountManager.Instance.IsMountUnlocked(requirement.MountID);
+                case RequirementsData.RequirementType.Pet:
+                    return PetManager.Instance != null && PetManager.Instance.IsPetUnlocked(requirement.PetID);
+                case RequirementsData.RequirementType.WorldEvent:
+                    return WorldEventManager.Instance != null && WorldEventManager.Instance.IsEventActive(requirement.WorldEventID);
+                case RequirementsData.RequirementType.Dungeon:
+                    return DungeonManager.Instance != null && !DungeonManager.Instance.IsDungeonOnLockout(requirement.DungeonID);
+                case RequirementsData.RequirementType.Lore:
+                    return LoreManager.Instance != null && LoreManager.Instance.IsLoreUnlocked(requirement.LoreID);
+                case RequirementsData.RequirementType.Bestiary:
+                    return BestiaryManager.Instance != null && BestiaryManager.Instance.IsBestiaryUnlocked(requirement.BestiaryID);
+                case RequirementsData.RequirementType.Transmog:
+                    return TransmogManager.Instance != null && TransmogManager.Instance.IsAppearanceUnlocked(requirement.TransmogID);
+                case RequirementsData.RequirementType.Weather:
+                    return WeatherManager.Instance != null && WeatherManager.Instance.IsWeatherActive(requirement.WeatherID);
+                case RequirementsData.RequirementType.Paragon:
+                    return ParagonManager.Instance != null && ParagonManager.Instance.GetParagonLevel(requirement.ParagonID) >= requirement.Amount1;
+                case RequirementsData.RequirementType.Reputation:
+                    return ReputationManager.Instance != null && ReputationManager.Instance.GetReputation(requirement.FactionID) >= requirement.Amount1;
+                case RequirementsData.RequirementType.Guild:
+                    return GuildManager.Instance != null && GuildManager.Instance.IsInGuild();
+                case RequirementsData.RequirementType.Party:
+                    return PartyManager.Instance != null && PartyManager.Instance.IsInParty();
+                case RequirementsData.RequirementType.ItemLevel:
+                    return InventoryManagerExtended.GetAverageItemLevel() >= requirement.Amount1;
+                case RequirementsData.RequirementType.AchievementPoints:
+                    return AchievementManager.Instance != null && AchievementManager.Instance.GetTotalPoints() >= requirement.Amount1;
+                case RequirementsData.RequirementType.Honor:
+                    return Character.Instance.CharacterData.HonorPoints >= requirement.Amount1;
+                case RequirementsData.RequirementType.GuildLevel:
+                    return GuildManager.Instance != null && GuildManager.Instance.GetGuild() != null && GuildManager.Instance.GetGuild().level >= requirement.Amount1;
+            }
+
             return true;
         }
 

@@ -58,7 +58,7 @@ public class GameState : MonoBehaviour
     {
         CurrentGameScene = RPGBuilderUtilities.GetGameSceneFromName(SceneManager.GetActiveScene().name);
         allGraveyards.Clear();
-        allGraveyards = FindObjectsOfType<CharacterGraveyard>().ToList();
+        allGraveyards = FindObjectsByType<CharacterGraveyard>(FindObjectsSortMode.None).ToList();
         nextNPCSpawnerCheck = 0;
         inGame = true;
     }

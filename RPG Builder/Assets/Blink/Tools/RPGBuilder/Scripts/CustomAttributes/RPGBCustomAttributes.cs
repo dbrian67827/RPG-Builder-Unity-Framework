@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,6 +40,38 @@ public class ResourceIDAttribute : IDAttribute {}
 public class GameSceneIDAttribute : IDAttribute {}
 public class DialogueIDAttribute : IDAttribute {}
 public class GameModifierIDAttribute : IDAttribute {}
+
+// NEW RPG BUILDER EXTENDED IDs - Full Blown RPG
+public class TitleIDAttribute : IDAttribute {}
+public class AchievementIDAttribute : IDAttribute {}
+public class MountIDAttribute : IDAttribute {}
+public class PetIDAttribute : IDAttribute {}
+public class WorldEventIDAttribute : IDAttribute {}
+public class DungeonIDAttribute : IDAttribute {}
+public class LoreIDAttribute : IDAttribute {}
+public class BestiaryIDAttribute : IDAttribute {}
+public class MailTemplateIDAttribute : IDAttribute {}
+public class GuildIDAttribute : IDAttribute {}
+public class ReputationRewardIDAttribute : IDAttribute {}
+public class CraftingQualityIDAttribute : IDAttribute {}
+public class ShopIDAttribute : IDAttribute {}
+public class TransmogIDAttribute : IDAttribute {}
+public class AppearanceIDAttribute : IDAttribute {}
+public class WeatherIDAttribute : IDAttribute {}
+public class MiniGameIDAttribute : IDAttribute {}
+public class HousingIDAttribute : IDAttribute {}
+public class DialogueBranchIDAttribute : IDAttribute {}
+public class ReputationLevelIDAttribute : IDAttribute {}
+public class FactionRankIDAttribute : IDAttribute {}
+public class BuffCategoryIDAttribute : IDAttribute {}
+public class DeBuffCategoryIDAttribute : IDAttribute {}
+public class ItemSetIDAttribute : IDAttribute {} // alias for GearSet but new
+public class SkillTreeIDAttribute : IDAttribute {}
+public class ParagonIDAttribute : IDAttribute {}
+public class RuneIDAttribute : IDAttribute {}
+public class GlyphIDAttribute : IDAttribute {}
+public class TalentIDAttribute : IDAttribute {}
  
 public class RPGDataListAttribute : BaseCustomAttribute {}
+public class RPGNonSerializedAttribute : BaseCustomAttribute {}
  

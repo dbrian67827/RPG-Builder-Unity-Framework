@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -253,6 +253,58 @@ namespace BLINK.RPGBuilder.Managers
             return GameModifiers;
         }
 
+        // ========== NEW FULL RPG DATABASE ENTRIES ==========
+        private Dictionary<int, RPGTitle> Titles = new Dictionary<int, RPGTitle>();
+        public Dictionary<int, RPGTitle> GetTitles() => Titles;
+
+        private Dictionary<int, RPGAchievement> Achievements = new Dictionary<int, RPGAchievement>();
+        public Dictionary<int, RPGAchievement> GetAchievements() => Achievements;
+
+        private Dictionary<int, RPGMount> Mounts = new Dictionary<int, RPGMount>();
+        public Dictionary<int, RPGMount> GetMounts() => Mounts;
+
+        private Dictionary<int, RPGPet> Pets = new Dictionary<int, RPGPet>();
+        public Dictionary<int, RPGPet> GetPets() => Pets;
+
+        private Dictionary<int, RPGWorldEvent> WorldEvents = new Dictionary<int, RPGWorldEvent>();
+        public Dictionary<int, RPGWorldEvent> GetWorldEvents() => WorldEvents;
+
+        private Dictionary<int, RPGDungeon> Dungeons = new Dictionary<int, RPGDungeon>();
+        public Dictionary<int, RPGDungeon> GetDungeons() => Dungeons;
+
+        private Dictionary<int, RPGLore> Lore = new Dictionary<int, RPGLore>();
+        public Dictionary<int, RPGLore> GetLore() => Lore;
+
+        private Dictionary<int, RPGBestiary> Bestiary = new Dictionary<int, RPGBestiary>();
+        public Dictionary<int, RPGBestiary> GetBestiary() => Bestiary;
+
+        private Dictionary<int, RPGMailTemplate> MailTemplates = new Dictionary<int, RPGMailTemplate>();
+        public Dictionary<int, RPGMailTemplate> GetMailTemplates() => MailTemplates;
+
+        private Dictionary<int, RPGCraftingQuality> CraftingQualities = new Dictionary<int, RPGCraftingQuality>();
+        public Dictionary<int, RPGCraftingQuality> GetCraftingQualities() => CraftingQualities;
+
+        private Dictionary<int, RPGReputationReward> ReputationRewards = new Dictionary<int, RPGReputationReward>();
+        public Dictionary<int, RPGReputationReward> GetReputationRewards() => ReputationRewards;
+
+        private Dictionary<int, RPGTransmog> Transmog = new Dictionary<int, RPGTransmog>();
+        public Dictionary<int, RPGTransmog> GetTransmog() => Transmog;
+
+        private Dictionary<int, RPGWeather> Weather = new Dictionary<int, RPGWeather>();
+        public Dictionary<int, RPGWeather> GetWeather() => Weather;
+
+        private Dictionary<int, RPGParagon> Paragons = new Dictionary<int, RPGParagon>();
+        public Dictionary<int, RPGParagon> GetParagons() => Paragons;
+
+        private Dictionary<int, RPGRune> Runes = new Dictionary<int, RPGRune>();
+        public Dictionary<int, RPGRune> GetRunes() => Runes;
+
+        private Dictionary<int, RPGGlyph> Glyphs = new Dictionary<int, RPGGlyph>();
+        public Dictionary<int, RPGGlyph> GetGlyphs() => Glyphs;
+
+        private Dictionary<int, RPGShop> Shops = new Dictionary<int, RPGShop>();
+        public Dictionary<int, RPGShop> GetShops() => Shops;
+
         private Dictionary<string, RPGBGender> Genders = new Dictionary<string, RPGBGender>();
         public Dictionary<string, RPGBGender> GetGenders()
         {
@@ -367,6 +419,25 @@ namespace BLINK.RPGBuilder.Managers
             GameScenes = Resources.LoadAll<RPGGameScene>(editorDATA.RPGBDatabasePath + "GameScenes").ToDictionary(t => t.ID, t => t);
             Dialogues = Resources.LoadAll<RPGDialogue>(editorDATA.RPGBDatabasePath + "Dialogues").ToDictionary(t => t.ID, t => t);
             GameModifiers = Resources.LoadAll<RPGGameModifier>(editorDATA.RPGBDatabasePath + "GameModifiers").ToDictionary(t => t.ID, t => t);
+
+            // NEW FULL RPG SYSTEMS - Load with fallback if folder empty
+            try { Titles = Resources.LoadAll<RPGTitle>(editorDATA.RPGBDatabasePath + "Titles").ToDictionary(t => t.ID, t => t); } catch { Titles = new Dictionary<int, RPGTitle>(); }
+            try { Achievements = Resources.LoadAll<RPGAchievement>(editorDATA.RPGBDatabasePath + "Achievements").ToDictionary(t => t.ID, t => t); } catch { Achievements = new Dictionary<int, RPGAchievement>(); }
+            try { Mounts = Resources.LoadAll<RPGMount>(editorDATA.RPGBDatabasePath + "Mounts").ToDictionary(t => t.ID, t => t); } catch { Mounts = new Dictionary<int, RPGMount>(); }
+            try { Pets = Resources.LoadAll<RPGPet>(editorDATA.RPGBDatabasePath + "Pets").ToDictionary(t => t.ID, t => t); } catch { Pets = new Dictionary<int, RPGPet>(); }
+            try { WorldEvents = Resources.LoadAll<RPGWorldEvent>(editorDATA.RPGBDatabasePath + "WorldEvents").ToDictionary(t => t.ID, t => t); } catch { WorldEvents = new Dictionary<int, RPGWorldEvent>(); }
+            try { Dungeons = Resources.LoadAll<RPGDungeon>(editorDATA.RPGBDatabasePath + "Dungeons").ToDictionary(t => t.ID, t => t); } catch { Dungeons = new Dictionary<int, RPGDungeon>(); }
+            try { Lore = Resources.LoadAll<RPGLore>(editorDATA.RPGBDatabasePath + "Lore").ToDictionary(t => t.ID, t => t); } catch { Lore = new Dictionary<int, RPGLore>(); }
+            try { Bestiary = Resources.LoadAll<RPGBestiary>(editorDATA.RPGBDatabasePath + "Bestiary").ToDictionary(t => t.ID, t => t); } catch { Bestiary = new Dictionary<int, RPGBestiary>(); }
+            try { MailTemplates = Resources.LoadAll<RPGMailTemplate>(editorDATA.RPGBDatabasePath + "MailTemplates").ToDictionary(t => t.ID, t => t); } catch { MailTemplates = new Dictionary<int, RPGMailTemplate>(); }
+            try { CraftingQualities = Resources.LoadAll<RPGCraftingQuality>(editorDATA.RPGBDatabasePath + "CraftingQualities").ToDictionary(t => t.ID, t => t); } catch { CraftingQualities = new Dictionary<int, RPGCraftingQuality>(); }
+            try { ReputationRewards = Resources.LoadAll<RPGReputationReward>(editorDATA.RPGBDatabasePath + "ReputationRewards").ToDictionary(t => t.ID, t => t); } catch { ReputationRewards = new Dictionary<int, RPGReputationReward>(); }
+            try { Transmog = Resources.LoadAll<RPGTransmog>(editorDATA.RPGBDatabasePath + "Transmog").ToDictionary(t => t.ID, t => t); } catch { Transmog = new Dictionary<int, RPGTransmog>(); }
+            try { Weather = Resources.LoadAll<RPGWeather>(editorDATA.RPGBDatabasePath + "Weather").ToDictionary(t => t.ID, t => t); } catch { Weather = new Dictionary<int, RPGWeather>(); }
+            try { Paragons = Resources.LoadAll<RPGParagon>(editorDATA.RPGBDatabasePath + "Paragon").ToDictionary(t => t.ID, t => t); } catch { Paragons = new Dictionary<int, RPGParagon>(); }
+            try { Runes = Resources.LoadAll<RPGRune>(editorDATA.RPGBDatabasePath + "Runes").ToDictionary(t => t.ID, t => t); } catch { Runes = new Dictionary<int, RPGRune>(); }
+            try { Glyphs = Resources.LoadAll<RPGGlyph>(editorDATA.RPGBDatabasePath + "Glyphs").ToDictionary(t => t.ID, t => t); } catch { Glyphs = new Dictionary<int, RPGGlyph>(); }
+            try { Shops = Resources.LoadAll<RPGShop>(editorDATA.RPGBDatabasePath + "Shops").ToDictionary(t => t.ID, t => t); } catch { Shops = new Dictionary<int, RPGShop>(); }
             
             Genders = Resources.LoadAll<RPGBGender>(editorDATA.RPGBDatabasePath + "Types").ToDictionary(t => t.entryName, t => t);
             ArmorSlots = Resources.LoadAll<RPGBArmorSlot>(editorDATA.RPGBDatabasePath + "Types").ToDictionary(t => t.entryName, t => t);

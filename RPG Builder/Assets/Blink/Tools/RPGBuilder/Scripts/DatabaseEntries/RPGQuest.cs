@@ -72,6 +72,64 @@ public class RPGQuest : RPGBuilderDatabaseEntry
     [RPGDataList] public List<QuestRewardDATA> rewardsGiven = new List<QuestRewardDATA>();
     [RPGDataList] public List<QuestRewardDATA> rewardsToPick = new List<QuestRewardDATA>();
 
+
+    public enum QuestType
+    {
+        Main,
+        Side,
+        Daily,
+        Weekly,
+        Repeatable,
+        Event,
+        Dungeon,
+        Raid,
+        PvP,
+        Crafting,
+        Gathering,
+        Escort,
+        Timed,
+        Chain,
+        Hidden
+    }
+    public QuestType questType = QuestType.Side;
+    public bool isDaily = false;
+    public bool isWeekly = false;
+    public bool isRepeatableDaily = false;
+    public bool isRepeatableWeekly = false;
+    public float timeLimit = 0f;
+    public bool failOnDeath = false;
+    public bool failOnLogout = false;
+    public int maxCompletionsPerDay = 1;
+    public int maxCompletionsPerWeek = 1;
+    public bool isChainQuest = false;
+    [QuestID] public int previousQuestID = -1;
+    [QuestID] public int nextQuestID = -1;
+    public bool isEscortQuest = false;
+    [NPCID] public int escortNPCID = -1;
+    public Vector3 escortDestination;
+    public float escortRadius = 10f;
+    public bool isTimed = false;
+    public float questTimer = 0f;
+    public bool shareable = true;
+    public bool abandonable = true;
+    public bool autoComplete = false;
+    public bool autoAccept = false;
+    public int requiredLevel = 1;
+    public int recommendedLevel = 1;
+    public bool isAccountWide = false;
+    public bool showOnMap = true;
+    public bool showTracker = true;
+    public int sortOrder = 0;
+    public string completedText = "Quest Completed!";
+    public string failedText = "Quest Failed!";
+    public GameObject questStartVFX;
+    public GameObject questCompleteVFX;
+    public AudioClip questStartSFX;
+    public AudioClip questCompleteSFX;
+    public bool hasBonusObjectives = false;
+    [RPGDataList] public List<QuestObjectiveDATA> bonusObjectives = new List<QuestObjectiveDATA>();
+
+
     public void UpdateEntryData(RPGQuest newEntryData)
     {
         ID = newEntryData.ID;
@@ -82,6 +140,44 @@ public class RPGQuest : RPGBuilderDatabaseEntry
         entryDescription = newEntryData.entryDescription;
         
         ObjectiveText = newEntryData.ObjectiveText;
+        questType = newEntryData.questType;
+        isDaily = newEntryData.isDaily;
+        isWeekly = newEntryData.isWeekly;
+        isRepeatableDaily = newEntryData.isRepeatableDaily;
+        isRepeatableWeekly = newEntryData.isRepeatableWeekly;
+        timeLimit = newEntryData.timeLimit;
+        failOnDeath = newEntryData.failOnDeath;
+        failOnLogout = newEntryData.failOnLogout;
+        maxCompletionsPerDay = newEntryData.maxCompletionsPerDay;
+        maxCompletionsPerWeek = newEntryData.maxCompletionsPerWeek;
+        isChainQuest = newEntryData.isChainQuest;
+        previousQuestID = newEntryData.previousQuestID;
+        nextQuestID = newEntryData.nextQuestID;
+        isEscortQuest = newEntryData.isEscortQuest;
+        escortNPCID = newEntryData.escortNPCID;
+        escortDestination = newEntryData.escortDestination;
+        escortRadius = newEntryData.escortRadius;
+        isTimed = newEntryData.isTimed;
+        questTimer = newEntryData.questTimer;
+        shareable = newEntryData.shareable;
+        abandonable = newEntryData.abandonable;
+        autoComplete = newEntryData.autoComplete;
+        autoAccept = newEntryData.autoAccept;
+        requiredLevel = newEntryData.requiredLevel;
+        recommendedLevel = newEntryData.recommendedLevel;
+        isAccountWide = newEntryData.isAccountWide;
+        showOnMap = newEntryData.showOnMap;
+        showTracker = newEntryData.showTracker;
+        sortOrder = newEntryData.sortOrder;
+        completedText = newEntryData.completedText;
+        failedText = newEntryData.failedText;
+        questStartVFX = newEntryData.questStartVFX;
+        questCompleteVFX = newEntryData.questCompleteVFX;
+        questStartSFX = newEntryData.questStartSFX;
+        questCompleteSFX = newEntryData.questCompleteSFX;
+        hasBonusObjectives = newEntryData.hasBonusObjectives;
+        bonusObjectives = newEntryData.bonusObjectives;
+
         ProgressText = newEntryData.ProgressText;
         repeatable = newEntryData.repeatable;
         Requirements = newEntryData.Requirements;

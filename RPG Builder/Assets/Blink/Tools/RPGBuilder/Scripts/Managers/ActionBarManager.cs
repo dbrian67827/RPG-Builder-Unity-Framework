@@ -173,7 +173,7 @@ namespace BLINK.RPGBuilder.Managers
         {
             actionBarSlots.Clear();
             int slotIndex = 0;
-            foreach (var actionBarSlot in FindObjectsOfType<ActionBarSlot>())
+            foreach (var actionBarSlot in FindObjectsByType<ActionBarSlot>(FindObjectsSortMode.None))
             {
                 actionBarSlots.Add(actionBarSlot);
                 actionBarSlot.SlotIndex = slotIndex;

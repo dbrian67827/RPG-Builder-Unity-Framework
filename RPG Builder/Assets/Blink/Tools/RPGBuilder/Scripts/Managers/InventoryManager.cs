@@ -636,6 +636,54 @@ namespace BLINK.RPGBuilder.Managers
             Character.Instance.CharacterData.Inventory.baseSlots[slotIndex].itemDataID = -1;
         }
 
+        public void AddItem(int itemID, int amount)
+        {
+            AddItem(itemID, amount, false, -1);
+        }
+
+        public void AddItem(int itemID, int amount, bool autoEquip)
+        {
+            AddItem(itemID, amount, autoEquip, -1);
+        }
+
+        public bool HasCurrency(int currencyID, int amount)
+        {
+            var cur = Character.Instance.getCurrencyDATA(currencyID);
+            return cur != null && cur.amount >= amount;
+        }
+
+        public bool RemoveItem(int itemID, int amount)
+        {
+            int remaining = amount;
+            foreach (var slot in Character.Instance.CharacterData.Inventory.baseSlots)
+            {
+                if (slot.itemID != itemID) continue;
+                if (slot.itemStack >= remaining)
+                {
+                    slot.itemStack -= remaining;
+                    if (slot.itemStack <= 0) { slot.itemID = -1; slot.itemStack = 0; }
+                    return true;
+                }
+                else
+                {
+                    remaining -= slot.itemStack;
+                    slot.itemID = -1;
+                    slot.itemStack = 0;
+                }
+            }
+            return remaining <= 0;
+        }
+
+        public void InitEquippedItems()
+        {
+        }
+
+        public bool IsItemEquipped(int itemID)
+        {
+            return Character.Instance.CharacterData.ArmorPiecesEquipped.Exists(a => a.itemID == itemID) ||
+                   Character.Instance.CharacterData.WeaponsEquipped.Exists(w => w.itemID == itemID);
+        }
+
         public void AddCurrency(int currencyID, int amount)
         {
             foreach (var t in Character.Instance.CharacterData.Currencies)

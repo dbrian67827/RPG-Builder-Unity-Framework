@@ -36,8 +36,8 @@ public class CharacterLoader : MonoBehaviour
         
         RPGBuilderUISettings gameUISettings = Resources.Load<RPGBuilderUISettings>("Database/Settings/UI_Settings");
         
-        if (FindObjectOfType<RPGBuilderEssentials>() == null) Instantiate(gameUISettings.RPGBuilderEssentialsPrefab, Vector3.zero, Quaternion.identity);
-        if (FindObjectOfType<LoadingScreenManager>() == null) Instantiate(gameUISettings.LoadingScreenManagerPrefab, Vector3.zero, Quaternion.identity);
+        if (FindFirstObjectByType<RPGBuilderEssentials>() == null) Instantiate(gameUISettings.RPGBuilderEssentialsPrefab, Vector3.zero, Quaternion.identity);
+        if (FindFirstObjectByType<LoadingScreenManager>() == null) Instantiate(gameUISettings.LoadingScreenManagerPrefab, Vector3.zero, Quaternion.identity);
 
         yield return new WaitForFixedUpdate();
         if (Character.Instance == null) yield break;

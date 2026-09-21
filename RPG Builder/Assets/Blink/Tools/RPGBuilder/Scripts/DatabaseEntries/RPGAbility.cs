@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BLINK.RPGBuilder.Combat;
 using BLINK.RPGBuilder.Managers;
@@ -239,9 +239,150 @@ public class RPGAbility : RPGBuilderDatabaseEntry
         [AbilityID] public int extraAbilityExecutedID;
         public RPGCombatDATA.CombatVisualActivationType extraAbilityExecutedActivationType;
 
+        // ========== EXTENDED RPG FEATURES ==========
+        public bool hasCharges = false;
+        public int maxCharges = 2;
+        public float chargeRecoveryTime = 10f;
+        public bool chargesShareCooldown = false;
+
+        public bool canBeDodged = true;
+        public bool canBeParried = true;
+        public bool canBeBlocked = true;
+        public bool canBeReflected = false;
+        public bool canBeInterrupted = true;
+        public bool isInterruptArmor = false;
+        public float interruptArmorAmount = 0f;
+
+        public bool canCastWhileMoving = false;
+        public float movementSpeedWhileCasting = 0.5f;
+
+        public bool hasComboPointCost = false;
+        public int comboPointsCost = 0;
+        public bool generatesComboPoints = false;
+        public int comboPointsGenerated = 1;
+
+        public bool hasRuneCost = false;
+        [RuneID] public int runeCostID = -1;
+        public int runeCostAmount = 1;
+
+        public bool hasPvPModifiers = false;
+        public float pvpDamageMultiplier = 1f;
+        public float pvpHealingMultiplier = 1f;
+        public float pvpDurationMultiplier = 1f;
+
+        public bool hasScaling = true;
+        public float damageScalingPerLevel = 0.05f;
+        public float healingScalingPerLevel = 0.05f;
+
+        public bool hasCriticalOverride = false;
+        public float criticalChanceOverride = 0f;
+        public float criticalDamageOverride = 0f;
+
+        public bool hasSecondaryEffect = false;
+        [EffectID] public int secondaryEffectID = -1;
+        public float secondaryEffectChance = 25f;
+
+        public bool hasChainEffect = false;
+        public int chainMaxJumps = 3;
+        public float chainJumpDistance = 10f;
+        public float chainDamageReductionPerJump = 0.2f;
+
+        public bool hasGroundEffect = false;
+        public GameObject groundEffectPrefab;
+        public float groundEffectDuration = 5f;
+        public float groundEffectTickInterval = 1f;
+
+        public bool hasResourceOverTime = false;
+        public float resourceTickAmount = 5f;
+        public float resourceTickInterval = 1f;
+        public int resourceTickCount = 5;
+
+        public bool requiresLineOfSight = true;
+        public bool ignoresArmor = false;
+        public float armorPenetrationPercent = 0f;
+
+        public bool hasKnockback = false;
+        public float knockbackDistance = 5f;
+        public float knockbackDuration = 0.5f;
+
+        public bool hasPull = false;
+        public float pullDistance = 5f;
+        public float pullSpeed = 10f;
+
+        public bool hasLifeSteal = false;
+        public float lifeStealPercent = 0.1f;
+
+        public bool hasShield = false;
+        public float shieldAmount = 100f;
+        public float shieldDuration = 10f;
+
+        public bool hasThreatModifier = false;
+        public float threatMultiplier = 1f;
+        public bool isTaunt = false;
+
+        public bool hasDispel = false;
+        public int dispelCount = 1;
+        public bool dispelOffensive = true;
+        public bool dispelDefensive = false;
+
+        public bool hasStealBuff = false;
+        public int stealBuffCount = 1;
+
+        public bool isChanneledWhileMoving = false;
+        public bool cancelOnDamage = false;
+        public float damageThresholdToCancel = 0.3f;
+
+        public bool hasVisualScaling = false;
+        public float visualScalePerRank = 0.1f;
+
+        public bool hasSoundScaling = false;
+        public float soundVolumePerRank = 0f;
+
+        public bool isAOECap = false;
+        public int aoeCapCount = 5;
+        public float aoeCapDamageReduction = 0.5f;
+
+        public bool hasCooldownReductionOnHit = false;
+        public float cooldownReductionPerHit = 0.5f;
+
+        public bool hasCooldownResetChance = false;
+        public float cooldownResetChance = 5f;
+
+        public bool hasProcEffect = false;
+        [AbilityID] public int procAbilityID = -1;
+        public float procChance = 10f;
+        public float procCooldown = 5f;
+
+        // New targeting
+        public bool canTargetDead = false;
+        public bool canTargetSelfOnly = false;
+        public bool requiresComboPoints = false;
+        public int requiredComboPoints = 0;
+
     }
 
     [RPGDataList] public List<RPGAbilityRankData> ranks = new List<RPGAbilityRankData>();
+
+    // Global ability extended data
+    public bool isPassive = false;
+    public bool isStance = false;
+    public bool isTalent = false;
+    public bool isPvPOnly = false;
+    public bool isPvEOnly = false;
+    public int requiredLevel = 1;
+    [ClassID] public int requiredClassID = -1;
+    [RaceID] public int requiredRaceID = -1;
+    public bool isUnique = false;
+    public bool isHidden = false;
+    public int maxRank = 5;
+    public bool hasAutoLearn = false;
+    public bool hasGCDOverride = false;
+    public float gcdOverrideDuration = 0f;
+    public bool hasCustomTooltip = false;
+    public string customTooltipFormat = "";
+    public bool showCooldownInTooltip = true;
+    public bool showRangeInTooltip = true;
+    public bool showCostInTooltip = true;
 
     public void UpdateEntryData(RPGAbility newEntryData)
     {
@@ -255,6 +396,27 @@ public class RPGAbility : RPGBuilderDatabaseEntry
         ranks = newEntryData.ranks;
         learnedByDefault = newEntryData.learnedByDefault;
         abilityType = newEntryData.abilityType;
+
+        // Extended
+        isPassive = newEntryData.isPassive;
+        isStance = newEntryData.isStance;
+        isTalent = newEntryData.isTalent;
+        isPvPOnly = newEntryData.isPvPOnly;
+        isPvEOnly = newEntryData.isPvEOnly;
+        requiredLevel = newEntryData.requiredLevel;
+        requiredClassID = newEntryData.requiredClassID;
+        requiredRaceID = newEntryData.requiredRaceID;
+        isUnique = newEntryData.isUnique;
+        isHidden = newEntryData.isHidden;
+        maxRank = newEntryData.maxRank;
+        hasAutoLearn = newEntryData.hasAutoLearn;
+        hasGCDOverride = newEntryData.hasGCDOverride;
+        gcdOverrideDuration = newEntryData.gcdOverrideDuration;
+        hasCustomTooltip = newEntryData.hasCustomTooltip;
+        customTooltipFormat = newEntryData.customTooltipFormat;
+        showCooldownInTooltip = newEntryData.showCooldownInTooltip;
+        showRangeInTooltip = newEntryData.showRangeInTooltip;
+        showCostInTooltip = newEntryData.showCostInTooltip;
     }
 
     public void CopyEntryData(RPGAbilityRankData original, RPGAbilityRankData copied)
@@ -577,5 +739,97 @@ public class RPGAbility : RPGBuilderDatabaseEntry
 
             original.Requirements.Add(newGroup);
         }
+
+        // Extended copy
+        original.hasCharges = copied.hasCharges;
+        original.maxCharges = copied.maxCharges;
+        original.chargeRecoveryTime = copied.chargeRecoveryTime;
+        original.chargesShareCooldown = copied.chargesShareCooldown;
+        original.canBeDodged = copied.canBeDodged;
+        original.canBeParried = copied.canBeParried;
+        original.canBeBlocked = copied.canBeBlocked;
+        original.canBeReflected = copied.canBeReflected;
+        original.canBeInterrupted = copied.canBeInterrupted;
+        original.isInterruptArmor = copied.isInterruptArmor;
+        original.interruptArmorAmount = copied.interruptArmorAmount;
+        original.canCastWhileMoving = copied.canCastWhileMoving;
+        original.movementSpeedWhileCasting = copied.movementSpeedWhileCasting;
+        original.hasComboPointCost = copied.hasComboPointCost;
+        original.comboPointsCost = copied.comboPointsCost;
+        original.generatesComboPoints = copied.generatesComboPoints;
+        original.comboPointsGenerated = copied.comboPointsGenerated;
+        original.hasRuneCost = copied.hasRuneCost;
+        original.runeCostID = copied.runeCostID;
+        original.runeCostAmount = copied.runeCostAmount;
+        original.hasPvPModifiers = copied.hasPvPModifiers;
+        original.pvpDamageMultiplier = copied.pvpDamageMultiplier;
+        original.pvpHealingMultiplier = copied.pvpHealingMultiplier;
+        original.pvpDurationMultiplier = copied.pvpDurationMultiplier;
+        original.hasScaling = copied.hasScaling;
+        original.damageScalingPerLevel = copied.damageScalingPerLevel;
+        original.healingScalingPerLevel = copied.healingScalingPerLevel;
+        original.hasCriticalOverride = copied.hasCriticalOverride;
+        original.criticalChanceOverride = copied.criticalChanceOverride;
+        original.criticalDamageOverride = copied.criticalDamageOverride;
+        original.hasSecondaryEffect = copied.hasSecondaryEffect;
+        original.secondaryEffectID = copied.secondaryEffectID;
+        original.secondaryEffectChance = copied.secondaryEffectChance;
+        original.hasChainEffect = copied.hasChainEffect;
+        original.chainMaxJumps = copied.chainMaxJumps;
+        original.chainJumpDistance = copied.chainJumpDistance;
+        original.chainDamageReductionPerJump = copied.chainDamageReductionPerJump;
+        original.hasGroundEffect = copied.hasGroundEffect;
+        original.groundEffectPrefab = copied.groundEffectPrefab;
+        original.groundEffectDuration = copied.groundEffectDuration;
+        original.groundEffectTickInterval = copied.groundEffectTickInterval;
+        original.hasResourceOverTime = copied.hasResourceOverTime;
+        original.resourceTickAmount = copied.resourceTickAmount;
+        original.resourceTickInterval = copied.resourceTickInterval;
+        original.resourceTickCount = copied.resourceTickCount;
+        original.requiresLineOfSight = copied.requiresLineOfSight;
+        original.ignoresArmor = copied.ignoresArmor;
+        original.armorPenetrationPercent = copied.armorPenetrationPercent;
+        original.hasKnockback = copied.hasKnockback;
+        original.knockbackDistance = copied.knockbackDistance;
+        original.knockbackDuration = copied.knockbackDuration;
+        original.hasPull = copied.hasPull;
+        original.pullDistance = copied.pullDistance;
+        original.pullSpeed = copied.pullSpeed;
+        original.hasLifeSteal = copied.hasLifeSteal;
+        original.lifeStealPercent = copied.lifeStealPercent;
+        original.hasShield = copied.hasShield;
+        original.shieldAmount = copied.shieldAmount;
+        original.shieldDuration = copied.shieldDuration;
+        original.hasThreatModifier = copied.hasThreatModifier;
+        original.threatMultiplier = copied.threatMultiplier;
+        original.isTaunt = copied.isTaunt;
+        original.hasDispel = copied.hasDispel;
+        original.dispelCount = copied.dispelCount;
+        original.dispelOffensive = copied.dispelOffensive;
+        original.dispelDefensive = copied.dispelDefensive;
+        original.hasStealBuff = copied.hasStealBuff;
+        original.stealBuffCount = copied.stealBuffCount;
+        original.isChanneledWhileMoving = copied.isChanneledWhileMoving;
+        original.cancelOnDamage = copied.cancelOnDamage;
+        original.damageThresholdToCancel = copied.damageThresholdToCancel;
+        original.hasVisualScaling = copied.hasVisualScaling;
+        original.visualScalePerRank = copied.visualScalePerRank;
+        original.hasSoundScaling = copied.hasSoundScaling;
+        original.soundVolumePerRank = copied.soundVolumePerRank;
+        original.isAOECap = copied.isAOECap;
+        original.aoeCapCount = copied.aoeCapCount;
+        original.aoeCapDamageReduction = copied.aoeCapDamageReduction;
+        original.hasCooldownReductionOnHit = copied.hasCooldownReductionOnHit;
+        original.cooldownReductionPerHit = copied.cooldownReductionPerHit;
+        original.hasCooldownResetChance = copied.hasCooldownResetChance;
+        original.cooldownResetChance = copied.cooldownResetChance;
+        original.hasProcEffect = copied.hasProcEffect;
+        original.procAbilityID = copied.procAbilityID;
+        original.procChance = copied.procChance;
+        original.procCooldown = copied.procCooldown;
+        original.canTargetDead = copied.canTargetDead;
+        original.canTargetSelfOnly = copied.canTargetSelfOnly;
+        original.requiresComboPoints = copied.requiresComboPoints;
+        original.requiredComboPoints = copied.requiredComboPoints;
     }
 }
